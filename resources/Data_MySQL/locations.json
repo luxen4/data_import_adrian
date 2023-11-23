@@ -1,0 +1,252 @@
+[
+    {
+        "id": 201,
+        "name": "TechHub",
+        "city": "Silicon Valley"
+    },
+    {
+        "id": 202,
+        "name": "Finance Plaza",
+        "city": "New York"
+    },
+    {
+        "id": 203,
+        "name": "Manufacturing Park",
+        "city": "Detroit"
+    },
+    {
+        "id": 204,
+        "name": "Health Hub",
+        "city": "Boston"
+    },
+    {
+        "id": 205,
+        "name": "Consulting Center",
+        "city": "Chicago"
+    },
+    {
+        "id": 206,
+        "name": "Innovation Tower",
+        "city": "San Francisco"
+    },
+    {
+        "id": 207,
+        "name": "Data Dynamics Center",
+        "city": "Seattle"
+    },
+    {
+        "id": 208,
+        "name": "Logistics Hub",
+        "city": "Dallas"
+    },
+    {
+        "id": 209,
+        "name": "Energy Solutions Complex",
+        "city": "Houston"
+    },
+    {
+        "id": 210,
+        "name": "Strategic Solutions Campus",
+        "city": "Los Angeles"
+    },
+    {
+        "id": 211,
+        "name": "HealthCare Innovators Hospital",
+        "city": "Miami"
+    },
+    {
+        "id": 212,
+        "name": "Tech Tower",
+        "city": "Austin"
+    },
+    {
+        "id": 213,
+        "name": "Design Studio",
+        "city": "Atlanta"
+    },
+    {
+        "id": 214,
+        "name": "Investment Oasis",
+        "city": "Denver"
+    },
+    {
+        "id": 215,
+        "name": "Swift Logistics Headquarters",
+        "city": "Phoenix"
+    },
+    {
+        "id": 216,
+        "name": "Organic Farms",
+        "city": "San Diego"
+    },
+    {
+        "id": 217,
+        "name": "Data Science Institute",
+        "city": "San Jose"
+    },
+    {
+        "id": 218,
+        "name": "Robo Robotics Lab",
+        "city": "Portland"
+    },
+    {
+        "id": 219,
+        "name": "Green Groves Eco Center",
+        "city": "Salt Lake City"
+    },
+    {
+        "id": 220,
+        "name": "Pharma Haven",
+        "city": "Philadelphia"
+    },
+    {
+        "id": 221,
+        "name": "Space Exploration Center",
+        "city": "Orlando"
+    },
+    {
+        "id": 222,
+        "name": "Cosmic Consulting HQ",
+        "city": "Tampa"
+    },
+    {
+        "id": 223,
+        "name": "Innovations Institute",
+        "city": "Raleigh"
+    },
+    {
+        "id": 224,
+        "name": "Entertainment Hub",
+        "city": "Nashville"
+    },
+    {
+        "id": 225,
+        "name": "Lunar Logistics Center",
+        "city": "Memphis"
+    },
+    {
+        "id": 226,
+        "name": "Solaris Systems Lab",
+        "city": "Louisville"
+    },
+    {
+        "id": 227,
+        "name": "Quantum Quest Institute",
+        "city": "Charlotte"
+    },
+    {
+        "id": 228,
+        "name": "Future Farms Research Center",
+        "city": "Indianapolis"
+    },
+    {
+        "id": 229,
+        "name": "Innovate Insurance Headquarters",
+        "city": "Columbus"
+    },
+    {
+        "id": 230,
+        "name": "Neural Networks Research Lab",
+        "city": "Minneapolis"
+    },
+    {
+        "id": 231,
+        "name": "Precision Printing Studio",
+        "city": "Kansas City"
+    },
+    {
+        "id": 232,
+        "name": "Macro Motors Innovation Center",
+        "city": "St. Louis"
+    },
+    {
+        "id": 233,
+        "name": "Cosmo Creations Art Studio",
+        "city": "Detroit"
+    },
+    {
+        "id": 234,
+        "name": "Quantum Quotient Lab",
+        "city": "Milwaukee"
+    },
+    {
+        "id": 235,
+        "name": "Data Drones Development Center",
+        "city": "Omaha"
+    },
+    {
+        "id": 236,
+        "name": "Sunrise Solutions Solar Energy Lab",
+        "city": "Des Moines"
+    },
+    {
+        "id": 237,
+        "name": "Aero Avionics Aerospace Research",
+        "city": "Oklahoma City"
+    },
+    {
+        "id": 238,
+        "name": "Virtual Vision VR Studio",
+        "city": "Tulsa"
+    },
+    {
+        "id": 239,
+        "name": "Aqua Adventures Marine Exploration Center",
+        "city": "Wichita"
+    },
+    {
+        "id": 240,
+        "name": "Electro Elegance Electronics Lab",
+        "city": "New Orleans"
+    },
+    {
+        "id": 241,
+        "name": "Agile Analytics Data Center",
+        "city": "Houston"
+    },
+    {
+        "id": 242,
+        "name": "Metro Motors Manufacturing Plant",
+        "city": "Dallas"
+    },
+    {
+        "id": 243,
+        "name": "Eco Energy Solutions Research Facility",
+        "city": "Austin"
+    },
+    {
+        "id": 244,
+        "name": "Inno Ideas Innovation Center",
+        "city": "San Antonio"
+    },
+    {
+        "id": 245,
+        "name": "Green Grids Environmental Center",
+        "city": "Fort Worth"
+    },
+    {
+        "id": 246,
+        "name": "Crypto Catalyst Crypto Lab",
+        "city": "El Paso"
+    },
+    {
+        "id": 247,
+        "name": "Skyline Software Development Studio",
+        "city": "Arlington"
+    },
+    {
+        "id": 248,
+        "name": "Prestige Pharma Research Lab",
+        "city": "Corpus Christi"
+    },
+    {
+        "id": 249,
+        "name": "Robo Rovers Robotics Lab",
+        "city": "Plano"
+    },
+    {
+        "id": 250,
+        "name": "Alpha Airlines Hub",
+        "city": "Irving"
+    }
+]

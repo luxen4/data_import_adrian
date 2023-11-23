@@ -1,0 +1,277 @@
+[
+    {
+        "person_id": 1,
+        "skill_id": 301,
+        "proficiency": "Intermediate"
+    },
+    {
+        "person_id": 1,
+        "skill_id": 303,
+        "proficiency": "Advanced"
+    },
+    {
+        "person_id": 1,
+        "skill_id": 305,
+        "proficiency": "Beginner"
+    },
+    {
+        "person_id": 2,
+        "skill_id": 306,
+        "proficiency": "Intermediate"
+    },
+    {
+        "person_id": 5,
+        "skill_id": 309,
+        "proficiency": "Beginner"
+    },
+    {
+        "person_id": 5,
+        "skill_id": 310,
+        "proficiency": "Advanced"
+    },
+    {
+        "person_id": 2,
+        "skill_id": 302,
+        "proficiency": "Advanced"
+    },
+    {
+        "person_id": 3,
+        "skill_id": 303,
+        "proficiency": "Beginner"
+    },
+    {
+        "person_id": 4,
+        "skill_id": 304,
+        "proficiency": "Expert"
+    },
+    {
+        "person_id": 5,
+        "skill_id": 305,
+        "proficiency": "Intermediate"
+    },
+    {
+        "person_id": 6,
+        "skill_id": 306,
+        "proficiency": "Advanced"
+    },
+    {
+        "person_id": 7,
+        "skill_id": 307,
+        "proficiency": "Beginner"
+    },
+    {
+        "person_id": 8,
+        "skill_id": 308,
+        "proficiency": "Expert"
+    },
+    {
+        "person_id": 9,
+        "skill_id": 309,
+        "proficiency": "Intermediate"
+    },
+    {
+        "person_id": 10,
+        "skill_id": 310,
+        "proficiency": "Advanced"
+    },
+    {
+        "person_id": 11,
+        "skill_id": 311,
+        "proficiency": "Beginner"
+    },
+    {
+        "person_id": 12,
+        "skill_id": 312,
+        "proficiency": "Expert"
+    },
+    {
+        "person_id": 13,
+        "skill_id": 313,
+        "proficiency": "Intermediate"
+    },
+    {
+        "person_id": 14,
+        "skill_id": 314,
+        "proficiency": "Advanced"
+    },
+    {
+        "person_id": 15,
+        "skill_id": 315,
+        "proficiency": "Beginner"
+    },
+    {
+        "person_id": 16,
+        "skill_id": 316,
+        "proficiency": "Expert"
+    },
+    {
+        "person_id": 17,
+        "skill_id": 317,
+        "proficiency": "Intermediate"
+    },
+    {
+        "person_id": 18,
+        "skill_id": 318,
+        "proficiency": "Advanced"
+    },
+    {
+        "person_id": 19,
+        "skill_id": 319,
+        "proficiency": "Beginner"
+    },
+    {
+        "person_id": 20,
+        "skill_id": 320,
+        "proficiency": "Expert"
+    },
+    {
+        "person_id": 21,
+        "skill_id": 321,
+        "proficiency": "Intermediate"
+    },
+    {
+        "person_id": 22,
+        "skill_id": 322,
+        "proficiency": "Advanced"
+    },
+    {
+        "person_id": 23,
+        "skill_id": 323,
+        "proficiency": "Beginner"
+    },
+    {
+        "person_id": 24,
+        "skill_id": 324,
+        "proficiency": "Expert"
+    },
+    {
+        "person_id": 25,
+        "skill_id": 325,
+        "proficiency": "Intermediate"
+    },
+    {
+        "person_id": 26,
+        "skill_id": 326,
+        "proficiency": "Advanced"
+    },
+    {
+        "person_id": 27,
+        "skill_id": 327,
+        "proficiency": "Beginner"
+    },
+    {
+        "person_id": 28,
+        "skill_id": 328,
+        "proficiency": "Expert"
+    },
+    {
+        "person_id": 29,
+        "skill_id": 329,
+        "proficiency": "Intermediate"
+    },
+    {
+        "person_id": 30,
+        "skill_id": 330,
+        "proficiency": "Advanced"
+    },
+    {
+        "person_id": 31,
+        "skill_id": 331,
+        "proficiency": "Beginner"
+    },
+    {
+        "person_id": 32,
+        "skill_id": 332,
+        "proficiency": "Expert"
+    },
+    {
+        "person_id": 33,
+        "skill_id": 333,
+        "proficiency": "Intermediate"
+    },
+    {
+        "person_id": 34,
+        "skill_id": 334,
+        "proficiency": "Advanced"
+    },
+    {
+        "person_id": 35,
+        "skill_id": 335,
+        "proficiency": "Beginner"
+    },
+    {
+        "person_id": 36,
+        "skill_id": 336,
+        "proficiency": "Expert"
+    },
+    {
+        "person_id": 37,
+        "skill_id": 337,
+        "proficiency": "Intermediate"
+    },
+    {
+        "person_id": 38,
+        "skill_id": 338,
+        "proficiency": "Advanced"
+    },
+    {
+        "person_id": 39,
+        "skill_id": 339,
+        "proficiency": "Beginner"
+    },
+    {
+        "person_id": 40,
+        "skill_id": 340,
+        "proficiency": "Expert"
+    },
+    {
+        "person_id": 41,
+        "skill_id": 341,
+        "proficiency": "Intermediate"
+    },
+    {
+        "person_id": 42,
+        "skill_id": 342,
+        "proficiency": "Advanced"
+    },
+    {
+        "person_id": 43,
+        "skill_id": 343,
+        "proficiency": "Beginner"
+    },
+    {
+        "person_id": 44,
+        "skill_id": 344,
+        "proficiency": "Expert"
+    },
+    {
+        "person_id": 45,
+        "skill_id": 345,
+        "proficiency": "Intermediate"
+    },
+    {
+        "person_id": 46,
+        "skill_id": 346,
+        "proficiency": "Advanced"
+    },
+    {
+        "person_id": 47,
+        "skill_id": 347,
+        "proficiency": "Beginner"
+    },
+    {
+        "person_id": 48,
+        "skill_id": 348,
+        "proficiency": "Expert"
+    },
+    {
+        "person_id": 49,
+        "skill_id": 349,
+        "proficiency": "Intermediate"
+    },
+    {
+        "person_id": 50,
+        "skill_id": 350,
+        "proficiency": "Advanced"
+    }
+]

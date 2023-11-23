@@ -1,0 +1,113 @@
+'''
+Hacer un mongoVolume
+docker pull mongo
+docker run --name mongo -p 8888:27017 -v mongoVolume:/data/db -d mongo                                          OK  							
+docker exec -it mongo bash
+mongosh
+text>>
+
+
+neo4j
+docker pull neo4j
+docker run --publish=7474:7474 --publish=7687:7687 --volume=neo4jVolume:/data -d neo4j                          OK
+contraseña alberite   cuando se cambie
+http://localhost:7474/browser/
+python extension pack           como extensión
+
+
+Mysql
+docker pull mysql
+docker run --name mysq -p 3306:3306 -v mysqlVolume:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mysql  OK
+mysql -u root -p    para entrar desde exec y a la cmd
+Enter password:my-secret-pw
+
+'''
+
+
+
+
+
+
+
+
+
+
+    
+'''
+MySql
+
+
+create database dataimport; 
+
+locations.json
+    {"id": 201,"name": "TechHub", "city": "Silicon Valley" },
+    {"id": 202, "name": "Finance Plaza","city": "New York"},
+    {"id": 203,  "name": "Manufacturing Park", "city": "Detroit" },
+    {"id": 204, "name": "Health Hub", "city": "Boston"},
+    {"id": 205, "name": "Consulting Center", "city": "Chicago" },
+
+create table location(
+id_location INT AUTO_INCREMENT PRIMARY KEY,
+name nvarchar (10) not null,
+city nvarchar(50) not null
+); 
+
+ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;  
+   
+   
+   
+   
+skill.json
+    {"id": 301,"name": "Software Development" },
+    { "id": 302,  "name": "Financial Analysis" },
+    { "id": 303, "name": "Product Design" },
+    { "id": 304, "name": "Medical Research"},
+    {"id": 305, "name": "Consulting"},  
+    
+create table skill(
+    id_skill INT AUTO_INCREMENT PRIMARY KEY,
+    name nvarchar (10) not null
+);
+ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;  
+   
+
+personSkill.json
+    {"person_id": 1,"skill_id": 301, "proficiency": "Intermediate"},
+    {"person_id": 1,"skill_id": 303, "proficiency": "Advanced"},
+    {"person_id": 1, "skill_id": 305,"proficiency": "Beginner"},
+    {"person_id": 2,"skill_id": 306, "proficiency": "Intermediate"},
+    {"person_id": 5, "skill_id": 309,"proficiency": "Beginner"},
+   
+create table has_skill(
+    id_has_skill INT AUTO_INCREMENT PRIMARY KEY,
+    id_person int not null,
+    id_skill int not null,
+    proficiency nvarchar (30) not null
+);
+
+ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;  
+
+'''
+
+
+
+
+
+'''
+Las personas se encuentran en un persons.csv
+id,name,age
+1,Alice,30
+2,Bob,28
+3,Charlie,35
+4,David,42
+5,Eve,25
+
+works_at
+person_id,company_id,role,location_id
+1,101,Engineer,205
+2,102,Manager,207
+3,103,Designer,206
+4,104,Researcher,206
+5,105,Consultant,206'''
+
+

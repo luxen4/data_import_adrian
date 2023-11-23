@@ -1,0 +1,51 @@
+person_id,company_id,role,location_id
+1,101,Engineer,205
+2,102,Manager,207
+3,103,Designer,206
+4,104,Researcher,206
+5,105,Consultant,206
+6,106,Developer,207
+7,107,Engineer,207
+8,108,Manager,207
+9,109,Analyst,207
+10,110,Consultant,207
+11,111,Doctor,207
+12,112,Developer,207
+13,113,Designer,211
+14,114,Investment Analyst,211
+15,115,Logistics Coordinator,211
+16,116,Agricultural Scientist,211
+17,117,Data Scientist,211
+18,118,Robotics Engineer,215
+19,119,Environmental Scientist,215
+20,120,Pharmacist,215
+21,121,Astronaut,215
+22,122,Space Analyst,215
+23,123,Software Engineer,215
+24,124,Entertainment Producer,215
+25,125,Space Logistics Manager,212
+26,126,Solar Technology Engineer,212
+27,127,Quantum Computing Scientist,212
+28,128,Agriculture Innovator,212
+29,129,Insurance Analyst,212
+30,130,AI Researcher,212
+31,131,Printing Specialist,212
+32,132,Automotive Engineer,232
+33,133,Art and Design Creator,232
+34,134,Quantum Technology Analyst,232
+35,135,Drone Technology Specialist,232
+36,136,Solar Energy Analyst,232
+37,137,Aerospace Engineer,232
+38,138,Virtual Reality Developer,232
+39,139,Marine Explorer,240
+40,140,Electronics Engineer,240
+41,141,Data Analyst,240
+42,142,Automotive Engineer,240
+43,143,Energy Analyst,240
+44,144,Innovation Specialist,238
+45,145,Environmental Scientist,238
+46,146,Cryptocurrency Analyst,238
+47,147,Software Developer,238
+48,148,Pharmaceutical Researcher,238
+49,149,Robotics Specialist,238
+50,150,Pilot,238
