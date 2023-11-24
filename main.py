@@ -1,6 +1,6 @@
 # Este es el archivo que contiene el menú de la aplicación y que dependiendo de la opción seleccionada tomaremos una u otra acción
 # Preparar los contenedores de MySql, Mongo y Neo4j  Hecho
-# Insertar datos en MySql, prvia lectura de los csv_s
+# Insertar datos en MySql, prvia lectura de los csv_s 
 
 
 
