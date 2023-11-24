@@ -5,7 +5,7 @@
 
 
 
-
+'''
 #from Models.BookStore import Bookstore
 def main():
     #bookstore = Bookstore()
@@ -106,5 +106,48 @@ def main():
 
 if __name__ == "__main__":
     main()
-    
+'''
 
+
+
+
+
+import csv
+import os
+
+
+
+
+
+'''
+def read_csv_file(filename):
+    with open(filename, 'r') as file:
+        reader = csv.reader(file)
+        for row in reader:
+            print(row)
+            
+#C:\Users\Vespertino\data_import_adrian\resources\Data_Neo4j
+filename="./resources/MongoDB/projects.csv"
+read_csv_file(filename)
+
+
+def read_csv_file(filename):
+    with open(filename, 'r') as file:
+        reader = csv.reader(file)
+        for row in reader:
+            print(row)
+            
+#C:\Users\Vespertino\data_import_adrian\resources\Data_Neo4j
+filename="./resources/MongoDB/teams.csv"
+read_csv_file(filename)
+'''
+
+def read_csv_file(filename):
+    with open(filename, 'r') as file:
+        reader = csv.reader(file)
+        for row in reader:
+            print(row)
+            
+#C:\Users\Vespertino\data_import_adrian\resources\Data_Neo4j
+filename="./resources/MongoDB/works_in_team.csv"
+read_csv_file(filename)

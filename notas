@@ -111,3 +111,233 @@ person_id,company_id,role,location_id
 5,105,Consultant,206'''
 
 
+
+
+
+
+
+import csv
+import os
+
+
+filename="persons.csv"
+
+# Function to create a new CSV file with sample data
+def create_csv_file(filename):
+    data = [
+        ["Name", "Age", "City"],
+        ["Alice", 30, "New York"],
+        ["Bob", 25, "Los Angeles"],
+        ["Charlie", 35, "Chicago"],
+    ]
+
+    with open(filename, 'w', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerows(data)
+
+    print(f"Created {filename}")
+
+# Function to read and display the content of a CSV file
+def read_csv_file(filename):
+    with open(filename, 'r') as file:
+        reader = csv.reader(file)
+        for row in reader:
+            print(row)
+
+# Function to modify a CSV file by adding a new row
+def modify_csv_file(filename, new_data):
+    with open(filename, 'a', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow(new_data)
+    print(f"Modified {filename} by adding a new row")
+
+# Function to delete a CSV file
+def delete_csv_file(filename):
+    if os.path.exists(filename):
+        os.remove(filename)
+        print(f"Deleted {filename}")
+    else:
+        print(f"{filename} does not exist.")
+
+# Function to override a CSV file with new data
+def override_csv_file(filename, new_data):
+    with open(filename, 'w', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerows(new_data)
+    print(f"Overridden {filename} with new data")
+
+# Usage examples
+create_csv_file("sample.csv")
+read_csv_file("sample.csv")
+modify_csv_file("sample.csv", ["David", 28, "Houston"])
+read_csv_file("sample.csv")
+override_csv_file("sample.csv", [["Eve", 40, "San Francisco"]])
+read_csv_file("sample.csv")
+delete_csv_file("sample.csv")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Lecturas de los  csv Neo4j
+# Function to read and display the content of a CSV file
+
+import csv
+import os
+
+def read_csv_file(filename):
+    with open(filename, 'r') as file:
+        reader = csv.reader(file)
+        for row in reader:
+            print(row)
+            
+#C:\Users\Vespertino\data_import_adrian\resources\Data_Neo4j
+filename="./resources/Data_Neo4j/persons.csv"
+read_csv_file(filename)
+
+# Function to read and display the content of a CSV file
+def read_csv_file(filename):
+    with open(filename, 'r') as file:
+        reader = csv.reader(file)
+        for row in reader:
+            print(row)
+            
+#C:\Users\Vespertino\data_import_adrian\resources\Data_Neo4j
+filename="./resources/Data_Neo4j/companies.csv"
+read_csv_file(filename)
+
+
+# Function to read and display the content of a CSV file
+def read_csv_file(filename):
+    with open(filename, 'r') as file:
+        reader = csv.reader(file)
+        for row in reader:
+            print(row)
+            
+#C:\Users\Vespertino\data_import_adrian\resources\Data_Neo4j
+filename="./resources/Data_Neo4j/works_at.csv"
+read_csv_file(filename)
+
+
+
+
+
+
+
+# Lecturas de los jsons MySql
+import json
+
+# Function to read and return data from a JSON file
+def read_json_file(filename):
+    try:
+        with open(filename, 'r') as file:
+            data = json.load(file)
+            return data
+    except FileNotFoundError:
+        return None
+    
+filename = "./resources/Data_MySql/locations.json"
+read_data = read_json_file(filename)
+print('Data from the file: ')
+print(read_data)
+'''
+'''
+# Lecturas de los jsons
+import json
+
+
+# Function to read and return data from a JSON file
+def read_json_file(filename):
+    try:
+        with open(filename, 'r') as file:
+            data = json.load(file)
+            return data
+    except FileNotFoundError:
+        return None
+    
+filename = "./resources/Data_MySql/personSkill.json"
+read_data = read_json_file(filename)
+print('Data from the file: ')
+print(read_data)
+
+
+
+# Lecturas de los jsons
+import json
+
+
+# Function to read and return data from a JSON file
+def read_json_file(filename):
+    try:
+        with open(filename, 'r') as file:
+            data = json.load(file)
+            return data
+    except FileNotFoundError:
+        return None
+    
+    
+filename = "./resources/Data_MySql/skills.json"
+read_data = read_json_file(filename)
+print('Data from the file: ')
+print(read_data)
+
+
+
+
+
+
+
+
+import csv
+import os
+
+
+
+
+
+'''
+def read_csv_file(filename):
+    with open(filename, 'r') as file:
+        reader = csv.reader(file)
+        for row in reader:
+            print(row)
+            
+#C:\Users\Vespertino\data_import_adrian\resources\Data_Neo4j
+filename="./resources/MongoDB/projects.csv"
+read_csv_file(filename)
+
+
+def read_csv_file(filename):
+    with open(filename, 'r') as file:
+        reader = csv.reader(file)
+        for row in reader:
+            print(row)
+            
+#C:\Users\Vespertino\data_import_adrian\resources\Data_Neo4j
+filename="./resources/MongoDB/teams.csv"
+read_csv_file(filename)
+'''
+
+def read_csv_file(filename):
+    with open(filename, 'r') as file:
+        reader = csv.reader(file)
+        for row in reader:
+            print(row)
+            
+#C:\Users\Vespertino\data_import_adrian\resources\Data_Neo4j
+filename="./resources/MongoDB/works_in_team.csv"
+read_csv_file(filename)
