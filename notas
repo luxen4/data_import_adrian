@@ -17,14 +17,14 @@ python extension pack           como extensión
 
 Mysql
 docker pull mysql
-docker run --name mysq -p 3306:3306 -v mysqlVolume:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mysql  OK
+docker run --name mysq -p 8888:3306 -v mysqlVolume:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mysql  OK
 mysql -u root -p    para entrar desde exec y a la cmd
 Enter password:my-secret-pw
 
 '''
 
-
-
+docker run --name mysq -e MYSQL_ROOT_PASSWORD=my-secret-pw -d -p 8888:3306 -v mysqlVolume:/var/lib/mysql mysql  OK en el video
+docker ps
 
 
 
@@ -78,11 +78,16 @@ personSkill.json
     {"person_id": 2,"skill_id": 306, "proficiency": "Intermediate"},
     {"person_id": 5, "skill_id": 309,"proficiency": "Beginner"},
    
+   
 create table has_skill(
     id_has_skill INT AUTO_INCREMENT PRIMARY KEY,
     id_person int not null,
     id_skill int not null,
     proficiency nvarchar (30) not null
+
+    foreign key (id_person) references id_person(id_person) on update cascade on delete cascade,
+    foreign key (id_skill) references formatocontenido(id_skill) on update cascade on delete cascade
+
 );
 
 ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;  
@@ -111,3 +116,22 @@ person_id,company_id,role,location_id
 5,105,Consultant,206'''
 
 
+
+
+
+connect_args = {
+    "host": "192.0.2.1",
+    "port": 3306,
+    "user": "testuser",
+    "password": "password",
+}
+ 
+db = mysql.connector.connect(**connect_args)
+cursor = db.cursor(named_tuple=True)
+ 
+sql = "SELECT * FROM world.city WHERE ID = 130"
+cursor.execute(sql)
+print(cursor.fetchone())
+ 
+cursor.close()
+db.close()

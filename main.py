@@ -1,16 +1,38 @@
+from mmmysql.data.db_operations import Database
+
+from mmmysql.model.location import Location
+from mmmysql.model.skill import Skill
+from mmmysql.model.has_skill import Has_Skill
+
 # Este es el archivo que contiene el menú de la aplicación y que dependiendo de la opción seleccionada tomaremos una u otra acción
 # Preparar los contenedores de MySql, Mongo y Neo4j  Hecho
 # Insertar datos en MySql, prvia lectura de los csv_s
+# 25/11/2023 Tratar de hacer los inserts de MySql
+
+
+# Para docker
+DB_HOST = "localhost"
+DB_USER = "root"
+DB_PASSWORD = "my-secret-pw"
+DB_DATABASE = "dataimport"
+DB_PORT = "8888"
 
 
 
-
+'''
+Contra fuera de docker
+DB_HOST = "localhost"
+DB_USER = "root"
+DB_PASSWORD = ""
+DB_DATABASE = "wineclub"
+DB_PORT = "3306"
+'''
 
 #from Models.BookStore import Bookstore
 def main():
     #bookstore = Bookstore()
     #bookstore.loadDataBooksFromJson()
-    
+    '''  
     while True:
         choice = int(input("Enter your choice: "))
         print("0. Carga de datos.")
@@ -53,7 +75,7 @@ def main():
                     print("Invalid choice. Please try again.")
         except ValueError:
             print("Invalid choice. Please try again.")
-
+    '''
 
 
 
@@ -83,7 +105,64 @@ def main():
                 case 3:
                     print("")
                 case 4:
-                    print("")
+                    print("Carga de Mysql")
+                    
+                    obj = Database(DB_HOST,DB_USER,DB_PASSWORD,DB_DATABASE,DB_PORT)
+                    
+                    
+                    
+                    
+                    # por cada uno que lea, que haga un insert
+                    location = Location("TechHub", "Silicon Valley") 
+                    #obj.insert_data2(location)
+                    
+                    #{"person_id": 1,"skill_id": 301, "proficiency": "Intermediate"},
+                    skill = Skill("proficiency")
+                    obj.insert_data3(skill)
+
+                    
+                    
+                    has_skill = Has_Skill( 1, 301, "proficiency")
+                    
+                    #obj.insert_data4(has_skill)
+                    
+
+                    
+                    
+                    
+                    
+                    
+                    '''                    
+                    locations.json
+                        {"id": 201,"name": "TechHub", "city": "Silicon Valley" },
+                        {"id": 202, "name": "Finance Plaza","city": "New York"},
+                        {"id": 203,  "name": "Manufacturing Park", "city": "Detroit" },
+                        {"id": 204, "name": "Health Hub", "city": "Boston"},
+                        {"id": 205, "name": "Consulting Center", "city": "Chicago" },
+
+                    create table location(
+                    id_location INT AUTO_INCREMENT PRIMARY KEY,
+                    name nvarchar (10) not null,
+                    city nvarchar(50) not null
+                    ); 
+                    '''
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
                 case 5:
                     print("")
                 case 6:
