@@ -116,22 +116,3 @@ person_id,company_id,role,location_id
 5,105,Consultant,206'''
 
 
-
-
-
-connect_args = {
-    "host": "192.0.2.1",
-    "port": 3306,
-    "user": "testuser",
-    "password": "password",
-}
- 
-db = mysql.connector.connect(**connect_args)
-cursor = db.cursor(named_tuple=True)
- 
-sql = "SELECT * FROM world.city WHERE ID = 130"
-cursor.execute(sql)
-print(cursor.fetchone())
- 
-cursor.close()
-db.close()
