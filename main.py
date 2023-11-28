@@ -1,5 +1,6 @@
 from mmmysql.data.db_operations import Database
 from mmmongo.data.mongo_operations import MongoDBOperations
+from mmneo4j.neo4j_operations import Neo4jCRUD
 
 
 from mmmysql.model.location import Location
@@ -11,6 +12,7 @@ from mmmongo.modelmongo.newTeam import NewTeam
 from mmmongo.modelmongo.newWork_in_Team import NewWorks_in_Team
 
 import csv
+import json
 import os
 
 
@@ -83,6 +85,51 @@ def insercionMongoDB():
         for row in reader:
             worksInTeam = NewWorks_in_Team(person_id= row[0], team_id=row[1], role=row[2])
             mongo_operations.create_team(worksInTeam) 
+
+
+def insercionMysql():
+    obj = Database(DB_HOST,DB_USER,DB_PASSWORD,DB_DATABASE,DB_PORT)
+    # Abre el archivo JSON y lee su contenido 
+    # por cada uno que lea, que haga un insert
+    with open('./resources/Data_Mysql/locations.json', 'r') as archivo_json:
+        datos = json.load(archivo_json)
+        
+    for i in range(0, len(datos), 1):
+        city=datos[i]['city']
+        name=datos[i]['name']
+        location = Location(city, name) 
+        #obj.insert_data2(location)
+
+    # Abre el archivo JSON y lee su contenido
+    with open('./resources/Data_Mysql/skills.json', 'r') as archivo_json:
+        datos = json.load(archivo_json)
+        
+    for i in range(0, len(datos), 1):
+        id=datos[i]['id']
+        name=datos[i]['name']
+    
+        # por cada uno que lea, que haga un insert
+        skill = Skill(name, id) 
+        #obj.insert_data3(skill)
+    
+    # Abre el archivo JSON y lee su contenido
+    with open('./resources/Data_Mysql/personSkill.json', 'r') as archivo_json:
+        datos = json.load(archivo_json)
+        
+    for i in range(0, len(datos), 1):
+        person_id=datos[i]['person_id']
+        skill_id=datos[i]['skill_id']
+        proficiency=datos[i]['proficiency']
+    
+        # por cada uno que lea, que haga un insert
+        person_skill = Person_Skill(person_id, skill_id, proficiency) 
+        obj.insert_data4(person_skill)
+
+
+
+
+
+
 
 
 
@@ -163,73 +210,85 @@ def main():
                     
                     
                     
+                    
                 case 2:
                     print("")
                 case 3:
                     print("")
                 case 4:
-                    print("Carga de Mysql")
-                    
-                    obj = Database(DB_HOST,DB_USER,DB_PASSWORD,DB_DATABASE,DB_PORT)
-                    
-                    
-                    
-                    import json
-                    
-                    # Abre el archivo JSON y lee su contenido
-                    with open('./resources/Data_Mysql/locations.json', 'r') as archivo_json:
-                        datos = json.load(archivo_json)
-                        
-                    for i in range(0, len(datos), 1):
-                        city=datos[i]['city']
-                        name=datos[i]['name']
-                    
-                        # por cada uno que lea, que haga un insert
-                        location = Location(city, name) 
-                        #obj.insert_data2(location)
-                        
-                    
-                    #{"person_id": 1,"skill_id": 301, "proficiency": "Intermediate"},
-                    skill = Skill("proficiencyaa")
-                    #obj.insert_data3(skill)
-
-                    
-                
-                    # Abre el archivo JSON y lee su contenido
-                    with open('./resources/Data_Mysql/skills.json', 'r') as archivo_json:
-                        datos = json.load(archivo_json)
-                        
-                    for i in range(0, len(datos), 1):
-                        id=datos[i]['id']
-                        name=datos[i]['name']
-                    
-                        # por cada uno que lea, que haga un insert
-                        skill = Skill(name, id) 
-                        #obj.insert_data3(skill)
-                    
-                    
-                    
-                    
-                    
-                    
-                    # Abre el archivo JSON y lee su contenido
-                    with open('./resources/Data_Mysql/personSkill.json', 'r') as archivo_json:
-                        datos = json.load(archivo_json)
-                        
-                    for i in range(0, len(datos), 1):
-                        person_id=datos[i]['person_id']
-                        skill_id=datos[i]['skill_id']
-                        proficiency=datos[i]['proficiency']
-                    
-                        # por cada uno que lea, que haga un insert
-                        person_skill = Person_Skill(person_id, skill_id, proficiency) 
-                        obj.insert_data4(person_skill)
-                        
+                    print("Inserción en MySql")
+                    insercionMysql()
                 case 5:
                     print("Inserción en MongoDB")
                     insercionMongoDB()
+                    
+                    
                 case 6:
-                    print("")
+                    print("Inserción Neo4j")
+                    
+                    # Conexión a neo4j
+                    uri = "bolt://localhost:7687"  
+                    user = "neo4j"
+                    password = "alberite"
+                    neo4j_crud = Neo4jCRUD(uri, user, password)
+                    
+                    print(" Inserción de companies")
+                    filename = "./resources/Data_Neo4j/companies.csv"
+                    with open(filename, 'r') as file:
+                        reader = csv.reader(file)
+                        for row in reader:
+                            print(row)
+                            id=row[0]
+                            name=row[1]
+                            industry=row[2]
+                            
+                            # Example: Create a node
+                            node_properties = {"id":id, "name":name, "industry":industry }
+                            #created_node = neo4j_crud.create_node("Companies", node_properties)
+                            #print(f"Created Node: {created_node}")
+                            
+                    print(" Inserción de persons")
+                    filename = "./resources/Data_Neo4j/persons.csv"
+                    with open(filename, 'r') as file:
+                        reader = csv.reader(file)
+                        for row in reader:
+                            print(row)
+                            id=row[0]
+                            name=row[1]
+                            age=row[2]
+                            
+                            # Example: Create a node
+                            node_properties = {"id":id, "name":name, "age":age }
+                            #created_node = neo4j_crud.create_node("Persons", node_properties)
+                            #print(f"Created Node: {created_node}")
+                            
+                    print(" Inserción de works_at")
+                    filename = "./resources/Data_Neo4j/works_at.csv"
+                    with open(filename, 'r') as file:
+                        reader = csv.reader(file)
+                        for row in reader:
+                            print(row)
+                            person_id=row[0]
+                            company_id=row[1]
+                            role=row[2]
+                            location_id=row[3]
+                            
+                            # Example: Create a node
+                            node_properties = {"person_id":person_id, "company_id":company_id, "role":role, "location_id":location_id }
+                            #created_node = neo4j_crud.create_node("Works_at", node_properties)
+                            #print(f"Created Node: {created_node}")
+                            
+                            
+                            # person_id,company_id,role,location_id
+                            # 1,101,Engineer,205
+                            
+                            
+                            
+                    create_relation = neo4j_crud.create_relatoionship("Persons","Companies","TRABAJA")
+                    #create_relation = neo4j_crud.create_relationshipAdrian("Persons","Works_at","TRABAJA")
+                    #person_id,company_id,role,location_id
+                    #1,101,Engineer,205               
+                    
                 case 7:
                     print("")
                 case 8:

@@ -94,6 +94,9 @@ ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 '''
 
+#{"person_id": 1,"skill_id": 301, "proficiency": "Intermediate"},
+skill = Skill("proficiencyaa")
+#obj.insert_data3(skill)
 
 
 
@@ -116,3 +119,58 @@ person_id,company_id,role,location_id
 5,105,Consultant,206'''
 
 
+
+Ver los nodos cargados:     match(cc:Companies) return cc           match(pp:Persons) return pp              match(ww:Work_at) return ww
+Borrar nodos                MATCH (cc:Companies) DETACH DELETE e
+
+
+
+// Eliminar relaciones
+MATCH (n:Persona {id: 1})-[r:AMIGO_DE]->(m:Persona {id: 2}) DELETE r // Identifica la relación
+MATCH (n:Persons)-[r:TRABAJA]->(c:Companies)  DELETE r // Elimina las relaciones
+
+MATCH (ww:Works_at)  DELETE ww  OK
+
+
+
+MATCH (p:Persons)-[:TRABAJA]->(c:Companies)
+RETURN *, p.name, c.name
+
+
+
+
+MATCH (b:Busines),(r:Review)
+WHERE b.business_id = r.business_id
+CREATE (b)-[:TIENE]->(r)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  '''
+print(" Inserción de works_at")
+filename = "./resources/Data_Neo4j/works_at.csv"
+with open(filename, 'r') as file:
+    reader = csv.reader(file)
+    for row in reader:
+        print(row)
+        person_id=row[0]
+        company_id=row[1]
+        role=row[2]
+        location_id=row[3]
+        
+        # Example: Create a node
+        node_properties = {"person_id":person_id, "company_id":company_id, "role":role, "location_id":location_id }
+        created_node = neo4j_crud.create_node("Works_at", node_properties)
+        print(f"Created Node: {created_node}")'''
