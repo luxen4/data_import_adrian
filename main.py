@@ -1,8 +1,18 @@
 from mmmysql.data.db_operations import Database
+from mmmongo.data.mongo_operations import MongoDBOperations
+
 
 from mmmysql.model.location import Location
 from mmmysql.model.skill import Skill
-from mmmysql.model.has_skill import Has_Skill
+from mmmysql.model.person_skill import Person_Skill
+
+from mmmongo.modelmongo.newProject import NewProject
+from mmmongo.modelmongo.newTeam import NewTeam
+from mmmongo.modelmongo.newWork_in_Team import NewWorks_in_Team
+
+import csv
+import os
+
 
 # Este es el archivo que contiene el menú de la aplicación y que dependiendo de la opción seleccionada tomaremos una u otra acción
 # Preparar los contenedores de MySql, Mongo y Neo4j  Hecho
@@ -16,7 +26,7 @@ DB_USER = "root"
 DB_PASSWORD = "my-secret-pw"
 DB_DATABASE = "dataimport"
 DB_PORT = "8888"
-
+ 
 
 
 '''
@@ -28,7 +38,56 @@ DB_DATABASE = "wineclub"
 DB_PORT = "3306"
 '''
 
-#from Models.BookStore import Bookstore
+
+
+
+ 
+
+# Función de insertado en MongoDB
+def insercionMongoDB():
+    
+    # Conexión a mongo
+    mongo_operations = MongoDBOperations('dataimport', 'works','8888')   # funciona OK
+
+    print(" Inserción de projects")
+    # leer el csv para que empiece a meter
+    filename = "./resources/MongoDB/projects.csv"
+    with open(filename, 'r') as file:
+        reader = csv.reader(file)
+        for row in reader:
+            project = NewProject(project_id= row[0], name=row[1], description=row[2], skill_id=row[3], location_id= row[4], company_id=row[5])
+            mongo_operations.create_project(project)
+            
+            
+    # Conexión a mongo
+    mongo_operations = MongoDBOperations('dataimport', 'teams','8888')   # funciona OK
+            
+    print(" Inserción de teams")
+    # leer el csv para que empiece a meter
+    filename = "./resources/MongoDB/teams.csv"
+    with open(filename, 'r') as file:
+        reader = csv.reader(file)
+        for row in reader:
+            team = NewTeam(team_id= row[0], name=row[1], description=row[2], project_id=row[3])
+            mongo_operations.create_team(team)  
+            
+            
+        # Conexión a mongo
+    mongo_operations = MongoDBOperations('dataimport', 'works_in_team','8888')   # funciona OK
+            
+    print(" Inserción de works_in_teams")
+    # leer el csv para que empiece a meter
+    filename = "./resources/MongoDB/works_in_team.csv"
+    with open(filename, 'r') as file:
+        reader = csv.reader(file)
+        for row in reader:
+            worksInTeam = NewWorks_in_Team(person_id= row[0], team_id=row[1], role=row[2])
+            mongo_operations.create_team(worksInTeam) 
+
+
+
+
+
 def main():
     #bookstore = Bookstore()
     #bookstore.loadDataBooksFromJson()
@@ -75,7 +134,7 @@ def main():
                     print("Invalid choice. Please try again.")
         except ValueError:
             print("Invalid choice. Please try again.")
-    '''
+        '''
 
 
 
@@ -100,6 +159,10 @@ def main():
             match choice:
                 case 1:
                     print("")
+                    
+                    
+                    
+                    
                 case 2:
                     print("")
                 case 3:
@@ -111,60 +174,60 @@ def main():
                     
                     
                     
+                    import json
                     
-                    # por cada uno que lea, que haga un insert
-                    location = Location("TechHub", "Silicon Valley") 
-                    #obj.insert_data2(location)
+                    # Abre el archivo JSON y lee su contenido
+                    with open('./resources/Data_Mysql/locations.json', 'r') as archivo_json:
+                        datos = json.load(archivo_json)
+                        
+                    for i in range(0, len(datos), 1):
+                        city=datos[i]['city']
+                        name=datos[i]['name']
+                    
+                        # por cada uno que lea, que haga un insert
+                        location = Location(city, name) 
+                        #obj.insert_data2(location)
+                        
                     
                     #{"person_id": 1,"skill_id": 301, "proficiency": "Intermediate"},
-                    skill = Skill("proficiency")
-                    obj.insert_data3(skill)
+                    skill = Skill("proficiencyaa")
+                    #obj.insert_data3(skill)
 
                     
+                
+                    # Abre el archivo JSON y lee su contenido
+                    with open('./resources/Data_Mysql/skills.json', 'r') as archivo_json:
+                        datos = json.load(archivo_json)
+                        
+                    for i in range(0, len(datos), 1):
+                        id=datos[i]['id']
+                        name=datos[i]['name']
                     
-                    has_skill = Has_Skill( 1, 301, "proficiency")
-                    
-                    #obj.insert_data4(has_skill)
-                    
-
-                    
-                    
-                    
-                    
-                    
-                    '''                    
-                    locations.json
-                        {"id": 201,"name": "TechHub", "city": "Silicon Valley" },
-                        {"id": 202, "name": "Finance Plaza","city": "New York"},
-                        {"id": 203,  "name": "Manufacturing Park", "city": "Detroit" },
-                        {"id": 204, "name": "Health Hub", "city": "Boston"},
-                        {"id": 205, "name": "Consulting Center", "city": "Chicago" },
-
-                    create table location(
-                    id_location INT AUTO_INCREMENT PRIMARY KEY,
-                    name nvarchar (10) not null,
-                    city nvarchar(50) not null
-                    ); 
-                    '''
+                        # por cada uno que lea, que haga un insert
+                        skill = Skill(name, id) 
+                        #obj.insert_data3(skill)
                     
                     
                     
                     
                     
                     
+                    # Abre el archivo JSON y lee su contenido
+                    with open('./resources/Data_Mysql/personSkill.json', 'r') as archivo_json:
+                        datos = json.load(archivo_json)
+                        
+                    for i in range(0, len(datos), 1):
+                        person_id=datos[i]['person_id']
+                        skill_id=datos[i]['skill_id']
+                        proficiency=datos[i]['proficiency']
                     
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
+                        # por cada uno que lea, que haga un insert
+                        person_skill = Person_Skill(person_id, skill_id, proficiency) 
+                        obj.insert_data4(person_skill)
+                        
                 case 5:
-                    print("")
+                    print("Inserción en MongoDB")
+                    insercionMongoDB()
                 case 6:
                     print("")
                 case 7:
@@ -186,4 +249,3 @@ def main():
 if __name__ == "__main__":
     main()
     
-

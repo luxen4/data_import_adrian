@@ -1,7 +1,7 @@
 import mysql.connector
 from mmmysql.model.location import Location
 from mmmysql.model.skill import Skill
-from mmmysql.model.has_skill import Has_Skill
+from mmmysql.model.person_skill import Person_Skill
 # pip install mysql-connector-python
 
 
@@ -90,8 +90,9 @@ class Database:
     
     
     def insert_data3(self, skill):
-        insert_query = "INSERT INTO skill (name) VALUES (%s)"
-        data = (skill.name)
+        print(skill.id)
+        insert_query = "INSERT INTO skill (id_skill, name) VALUES (%s, %s)"
+        data = (skill.id, skill.name)
         self.cursor.execute(insert_query, data)
         self.connection.commit()
         #Cogemos el id de la última fila insertada
@@ -99,14 +100,14 @@ class Database:
         return Skill(skill.name, skill_id)
     
     
-    def insert_data4(self, has_skill):
-        insert_query = "INSERT has_skill (id_person, id_skill, proficiency) VALUES (%s, %s, %s)"
-        data = (has_skill.id_person, has_skill.id_skill, has_skill.proficiency)
+    def insert_data4(self, person_skill):
+        insert_query = "INSERT person_skill (id_person, id_skill, proficiency) VALUES (%s, %s, %s)"
+        data = (person_skill.person_id, person_skill.skill_id, person_skill.proficiency)
         self.cursor.execute(insert_query, data)
         self.connection.commit()
         #Cogemos el id de la última fila insertada
-        has_skill_id = self.cursor.lastrowid
-        return Has_Skill(has_skill.id_person, has_skill.id_skill, has_skill.proficiency, has_skill_id)
+        person_skill_id = self.cursor.lastrowid
+        return Person_Skill(person_skill.person_id, person_skill.skill_id, person_skill.proficiency, person_skill_id)
 
         '''
         id_has_skill INT AUTO_INCREMENT PRIMARY KEY,

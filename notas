@@ -48,12 +48,14 @@ locations.json
 
 create table location(
 id_location INT AUTO_INCREMENT PRIMARY KEY,
-name nvarchar (10) not null,
+name nvarchar (50) not null,
 city nvarchar(50) not null
 ); 
 
 ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;  
    
+
+
    
    
    
@@ -66,7 +68,7 @@ skill.json
     
 create table skill(
     id_skill INT AUTO_INCREMENT PRIMARY KEY,
-    name nvarchar (10) not null
+    name nvarchar (30) not null
 );
 ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;  
    
@@ -79,15 +81,13 @@ personSkill.json
     {"person_id": 5, "skill_id": 309,"proficiency": "Beginner"},
    
    
-create table has_skill(
-    id_has_skill INT AUTO_INCREMENT PRIMARY KEY,
+create table person_skill(
+    id_person_skill INT AUTO_INCREMENT PRIMARY KEY,
     id_person int not null,
     id_skill int not null,
-    proficiency nvarchar (30) not null
+    proficiency nvarchar (40) not null,
 
-    foreign key (id_person) references id_person(id_person) on update cascade on delete cascade,
-    foreign key (id_skill) references formatocontenido(id_skill) on update cascade on delete cascade
-
+    foreign key (id_skill) references skill(id_skill) on update cascade on delete cascade
 );
 
 ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;  
