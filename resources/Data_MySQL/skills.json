@@ -1,94 +1,52 @@
 [
-    {
-        "id": 301,
-        "name": "Software Development"
-    },
-    {
-        "id": 302,
-        "name": "Financial Analysis"
-    },
-    {
-        "id": 303,
-        "name": "Product Design"
-    },
-    {
-        "id": 304,
-        "name": "Medical Research"
-    },
-    {
-        "id": 305,
-        "name": "Consulting"
-    },
-    {
-        "id": 306,
-        "name": "Innovation"
-    },
-    {
-        "id": 307,
-        "name": "Data Analytics"
-    },
-    {
-        "id": 308,
-        "name": "Logistics Management"
-    },
-    {
-        "id": 309,
-        "name": "Energy Solutions"
-    },
-    {
-        "id": 310,
-        "name": "Strategic Planning"
-    },
-    {
-        "id": 311,
-        "name": "Medical Practice"
-    },
-    {
-        "id": 312,
-        "name": "Software Engineering"
-    },
-    {
-        "id": 313,
-        "name": "Design"
-    },
-    {
-        "id": 314,
-        "name": "Investment Analysis"
-    },
-    {
-        "id": 315,
-        "name": "Supply Chain Management"
-    },
-    {
-        "id": 316,
-        "name": "Agricultural Science"
-    },
-    {
-        "id": 317,
-        "name": "Data Science"
-    },
-    {
-        "id": 318,
-        "name": "Robotics Engineering"
-    },
-    {
-        "id": 319,
-        "name": "Environmental Science"
-    },
-    {
-        "id": 320,
-        "name": "Pharmacy"
-    },
-    {
-        "id": 321,
-        "name": "Space Exploration"
-    },
-    {
-        "id": 322,
-        "name": "Space Analysis"
-    },
-    {
-        "id": 323,
-        "name": "Software Engineering"
-    }
+  {"id": 301, "name": "Programming"},
+  {"id": 302, "name": "Financial Analysis"},
+  {"id": 303, "name": "Product Design"},
+  {"id": 304, "name": "Medical Research"},
+  {"id": 305, "name": "Strategic Consulting"},
+  {"id": 306, "name": "Data Analytics"},
+  {"id": 307, "name": "Innovation"},
+  {"id": 308, "name": "Sustainable Energy"},
+  {"id": 309, "name": "Smart City Technologies"},
+  {"id": 310, "name": "Robotics"},
+  {"id": 311, "name": "Artificial Intelligence"},
+  {"id": 312, "name": "Supply Chain Management"},
+  {"id": 313, "name": "Inclusive Design"},
+  {"id": 314, "name": "E-commerce"},
+  {"id": 315, "name": "Space Exploration"},
+  {"id": 316, "name": "Smart Agriculture"},
+  {"id": 317, "name": "Blockchain Technology"},
+  {"id": 318, "name": "Quantum Computing"},
+  {"id": 319, "name": "Environmental Sustainability"},
+  {"id": 320, "name": "Virtual Reality"},
+  {"id": 321, "name": "Augmented Reality"},
+  {"id": 322, "name": "Future of Work Technologies"},
+  {"id": 323, "name": "Advanced Manufacturing"},
+  {"id": 324, "name": "Biotechnology"},
+  {"id": 325, "name": "Human-AI Collaboration"},
+  {"id": 326, "name": "Data Privacy and Security"},
+  {"id": 327, "name": "Renewable Energy Solutions"},
+  {"id": 328, "name": "Cybersecurity"},
+  {"id": 329, "name": "Green Transportation Solutions"},
+  {"id": 330, "name": "Global Health Technology"},
+  {"id": 331, "name": "Space Colonization"},
+  {"id": 332, "name": "Inclusive Education"},
+  {"id": 333, "name": "Blockchain for Social Impact"},
+  {"id": 334, "name": "Smart Home Automation"},
+  {"id": 335, "name": "Robotics in Education"},
+  {"id": 336, "name": "AR Applications"},
+  {"id": 337, "name": "Data Science"},
+  {"id": 338, "name": "Smart Grid"},
+  {"id": 339, "name": "Climate Change Mitigation"},
+  {"id": 340, "name": "Innovative Retail Technology"},
+  {"id": 341, "name": "Quantum Communication"},
+  {"id": 342, "name": "Bioinformatics"},
+  {"id": 343, "name": "Human-Computer Interaction"},
+  {"id": 344, "name": "Advanced Materials Science"},
+  {"id": 345, "name": "Neurotechnology"},
+  {"id": 346, "name": "Precision Agriculture"},
+  {"id": 347, "name": "Financial Technology"},
+  {"id": 348, "name": "Digital Marketing"},
+  {"id": 349, "name": "Augmented Intelligence"},
+  {"id": 350, "name": "Smart Manufacturing"}
 ]

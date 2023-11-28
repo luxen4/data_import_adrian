@@ -1,11 +1,16 @@
 '''
+Mysql
+docker pull mysql
+docker run --name mysq -p 8889:3306 -v mysqlVolume:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mysql  OK
+mysql -u root -p    para entrar desde exec y a la cmd
+Enter password:my-secret-pw
+
 Hacer un mongoVolume
 docker pull mongo
 docker run --name mongo -p 8888:27017 -v mongoVolume:/data/db -d mongo                                          OK  							
 docker exec -it mongo bash
 mongosh
 text>>
-
 
 neo4j
 docker pull neo4j
@@ -14,17 +19,10 @@ contraseña alberite   cuando se cambie
 http://localhost:7474/browser/
 python extension pack           como extensión
 
-
-Mysql
-docker pull mysql
-docker run --name mysq -p 8888:3306 -v mysqlVolume:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mysql  OK
-mysql -u root -p    para entrar desde exec y a la cmd
-Enter password:my-secret-pw
-
 '''
 
-docker run --name mysq -e MYSQL_ROOT_PASSWORD=my-secret-pw -d -p 8888:3306 -v mysqlVolume:/var/lib/mysql mysql  OK en el video
-docker ps
+
+
 
 
 
@@ -34,37 +32,24 @@ docker ps
 
     
 '''
-MySql
 
-
+MySql                                  Creación de tablas 
 create database dataimport; 
+use dataimport;
 
-locations.json
-    {"id": 201,"name": "TechHub", "city": "Silicon Valley" },
-    {"id": 202, "name": "Finance Plaza","city": "New York"},
-    {"id": 203,  "name": "Manufacturing Park", "city": "Detroit" },
-    {"id": 204, "name": "Health Hub", "city": "Boston"},
-    {"id": 205, "name": "Consulting Center", "city": "Chicago" },
+locations.json  {"id": 201,"name": "TechHub", "city": "Silicon Valley" },
 
 create table location(
 id_location INT AUTO_INCREMENT PRIMARY KEY,
-name nvarchar (50) not null,
+name nvarchar (30) not null,
 city nvarchar(50) not null
 ); 
-
 ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;  
    
-
-
    
    
    
-skill.json
-    {"id": 301,"name": "Software Development" },
-    { "id": 302,  "name": "Financial Analysis" },
-    { "id": 303, "name": "Product Design" },
-    { "id": 304, "name": "Medical Research"},
-    {"id": 305, "name": "Consulting"},  
+skill.json                {"id": 301,"name": "Software Development" },
     
 create table skill(
     id_skill INT AUTO_INCREMENT PRIMARY KEY,
@@ -73,30 +58,21 @@ create table skill(
 ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;  
    
 
-personSkill.json
-    {"person_id": 1,"skill_id": 301, "proficiency": "Intermediate"},
-    {"person_id": 1,"skill_id": 303, "proficiency": "Advanced"},
-    {"person_id": 1, "skill_id": 305,"proficiency": "Beginner"},
-    {"person_id": 2,"skill_id": 306, "proficiency": "Intermediate"},
-    {"person_id": 5, "skill_id": 309,"proficiency": "Beginner"},
+personSkill.json          {"person_id": 1,"skill_id": 301, "proficiency": "Intermediate"}
    
-   
-create table person_skill(
-    id_person_skill INT AUTO_INCREMENT PRIMARY KEY,
+create table has_skill(
+    id_has_skill INT AUTO_INCREMENT PRIMARY KEY,
     id_person int not null,
     id_skill int not null,
-    proficiency nvarchar (40) not null,
-
-    foreign key (id_skill) references skill(id_skill) on update cascade on delete cascade
+    proficiency nvarchar (30) not null
 );
+
+
 
 ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;  
 
 '''
 
-#{"person_id": 1,"skill_id": 301, "proficiency": "Intermediate"},
-skill = Skill("proficiencyaa")
-#obj.insert_data3(skill)
 
 
 
@@ -120,33 +96,68 @@ person_id,company_id,role,location_id
 
 
 
-Ver los nodos cargados:     match(cc:Companies) return cc           match(pp:Persons) return pp              match(ww:Work_at) return ww
-Borrar nodos                MATCH (cc:Companies) DETACH DELETE e
-
-
-
-// Eliminar relaciones
-MATCH (n:Persona {id: 1})-[r:AMIGO_DE]->(m:Persona {id: 2}) DELETE r // Identifica la relación
-MATCH (n:Persons)-[r:TRABAJA]->(c:Companies)  DELETE r // Elimina las relaciones
-
-MATCH (ww:Works_at)  DELETE ww  OK
-
-
-
-MATCH (p:Persons)-[:TRABAJA]->(c:Companies)
-RETURN *, p.name, c.name
-
-MATCH (p:Persons)-[:TRABAJA]->(c:Works_at)
-RETURN *, p.name
-
-
-MATCH (b:Busines),(r:Review)
-WHERE b.business_id = r.business_id
-CREATE (b)-[:TIENE]->(r)
 
 
 
 
+import csv
+import os
+
+
+filename="persons.csv"
+
+# Function to create a new CSV file with sample data
+def create_csv_file(filename):
+    data = [
+        ["Name", "Age", "City"],
+        ["Alice", 30, "New York"],
+        ["Bob", 25, "Los Angeles"],
+        ["Charlie", 35, "Chicago"],
+    ]
+
+    with open(filename, 'w', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerows(data)
+
+    print(f"Created {filename}")
+
+# Function to read and display the content of a CSV file
+def read_csv_file(filename):
+    with open(filename, 'r') as file:
+        reader = csv.reader(file)
+        for row in reader:
+            print(row)
+
+# Function to modify a CSV file by adding a new row
+def modify_csv_file(filename, new_data):
+    with open(filename, 'a', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow(new_data)
+    print(f"Modified {filename} by adding a new row")
+
+# Function to delete a CSV file
+def delete_csv_file(filename):
+    if os.path.exists(filename):
+        os.remove(filename)
+        print(f"Deleted {filename}")
+    else:
+        print(f"{filename} does not exist.")
+
+# Function to override a CSV file with new data
+def override_csv_file(filename, new_data):
+    with open(filename, 'w', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerows(new_data)
+    print(f"Overridden {filename} with new data")
+
+# Usage examples
+create_csv_file("sample.csv")
+read_csv_file("sample.csv")
+modify_csv_file("sample.csv", ["David", 28, "Houston"])
+read_csv_file("sample.csv")
+override_csv_file("sample.csv", [["Eve", 40, "San Francisco"]])
+read_csv_file("sample.csv")
+delete_csv_file("sample.csv")
 
 
 
@@ -159,19 +170,158 @@ CREATE (b)-[:TIENE]->(r)
 
 
 
-  '''
-print(" Inserción de works_at")
-filename = "./resources/Data_Neo4j/works_at.csv"
-with open(filename, 'r') as file:
-    reader = csv.reader(file)
-    for row in reader:
-        print(row)
-        person_id=row[0]
-        company_id=row[1]
-        role=row[2]
-        location_id=row[3]
-        
-        # Example: Create a node
-        node_properties = {"person_id":person_id, "company_id":company_id, "role":role, "location_id":location_id }
-        created_node = neo4j_crud.create_node("Works_at", node_properties)
-        print(f"Created Node: {created_node}")'''
+
+
+
+
+
+
+
+# Lecturas de los  csv Neo4j
+# Function to read and display the content of a CSV file
+
+import csv
+import os
+
+def read_csv_file(filename):
+    with open(filename, 'r') as file:
+        reader = csv.reader(file)
+        for row in reader:
+            print(row)
+            
+#C:\Users\Vespertino\data_import_adrian\resources\Data_Neo4j
+filename="./resources/Data_Neo4j/persons.csv"
+read_csv_file(filename)
+
+# Function to read and display the content of a CSV file
+def read_csv_file(filename):
+    with open(filename, 'r') as file:
+        reader = csv.reader(file)
+        for row in reader:
+            print(row)
+            
+#C:\Users\Vespertino\data_import_adrian\resources\Data_Neo4j
+filename="./resources/Data_Neo4j/companies.csv"
+read_csv_file(filename)
+
+
+# Function to read and display the content of a CSV file
+def read_csv_file(filename):
+    with open(filename, 'r') as file:
+        reader = csv.reader(file)
+        for row in reader:
+            print(row)
+            
+#C:\Users\Vespertino\data_import_adrian\resources\Data_Neo4j
+filename="./resources/Data_Neo4j/works_at.csv"
+read_csv_file(filename)
+
+
+
+
+
+
+
+# Lecturas de los jsons MySql
+import json
+
+# Function to read and return data from a JSON file
+def read_json_file(filename):
+    try:
+        with open(filename, 'r') as file:
+            data = json.load(file)
+            return data
+    except FileNotFoundError:
+        return None
+    
+filename = "./resources/Data_MySql/locations.json"
+read_data = read_json_file(filename)
+print('Data from the file: ')
+print(read_data)
+'''
+'''
+# Lecturas de los jsons
+import json
+
+
+# Function to read and return data from a JSON file
+def read_json_file(filename):
+    try:
+        with open(filename, 'r') as file:
+            data = json.load(file)
+            return data
+    except FileNotFoundError:
+        return None
+    
+filename = "./resources/Data_MySql/personSkill.json"
+read_data = read_json_file(filename)
+print('Data from the file: ')
+print(read_data)
+
+
+
+# Lecturas de los jsons
+import json
+
+
+# Function to read and return data from a JSON file
+def read_json_file(filename):
+    try:
+        with open(filename, 'r') as file:
+            data = json.load(file)
+            return data
+    except FileNotFoundError:
+        return None
+    
+    
+filename = "./resources/Data_MySql/skills.json"
+read_data = read_json_file(filename)
+print('Data from the file: ')
+print(read_data)
+
+
+
+
+
+
+
+
+import csv
+import os
+
+
+
+
+
+'''
+def read_csv_file(filename):
+    with open(filename, 'r') as file:
+        reader = csv.reader(file)
+        for row in reader:
+            print(row)
+            
+#C:\Users\Vespertino\data_import_adrian\resources\Data_Neo4j
+filename="./resources/MongoDB/projects.csv"
+read_csv_file(filename)
+
+
+def read_csv_file(filename):
+    with open(filename, 'r') as file:
+        reader = csv.reader(file)
+        for row in reader:
+            print(row)
+            
+#C:\Users\Vespertino\data_import_adrian\resources\Data_Neo4j
+filename="./resources/MongoDB/teams.csv"
+read_csv_file(filename)
+'''
+
+def read_csv_file(filename):
+    with open(filename, 'r') as file:
+        reader = csv.reader(file)
+        for row in reader:
+            print(row)
+            
+#C:\Users\Vespertino\data_import_adrian\resources\Data_Neo4j
+filename="./resources/MongoDB/works_in_team.csv"
+read_csv_file(filename)

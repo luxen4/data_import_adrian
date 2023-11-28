@@ -22,12 +22,12 @@ import os
 # 25/11/2023 Tratar de hacer los inserts de MySql
 
 
-# Para docker
+# Para docker Mysql
 DB_HOST = "localhost"
 DB_USER = "root"
 DB_PASSWORD = "my-secret-pw"
 DB_DATABASE = "dataimport"
-DB_PORT = "8888"
+DB_PORT = "8889"
  
 
 
@@ -49,7 +49,7 @@ DB_PORT = "3306"
 def insercionMongoDB():
     
     # Conexión a mongo
-    mongo_operations = MongoDBOperations('dataimport', 'works','8888')   # funciona OK
+    mongo_operations = MongoDBOperations('dataimport', 'works','8889')   # funciona OK
 
     print(" Inserción de projects")
     # leer el csv para que empiece a meter
@@ -62,7 +62,7 @@ def insercionMongoDB():
             
             
     # Conexión a mongo
-    mongo_operations = MongoDBOperations('dataimport', 'teams','8888')   # funciona OK
+    mongo_operations = MongoDBOperations('dataimport', 'teams','8889')   # funciona OK
             
     print(" Inserción de teams")
     # leer el csv para que empiece a meter
@@ -75,7 +75,7 @@ def insercionMongoDB():
             
             
         # Conexión a mongo
-    mongo_operations = MongoDBOperations('dataimport', 'works_in_team','8888')   # funciona OK
+    mongo_operations = MongoDBOperations('dataimport', 'works_in_team','8889')   # funciona OK
             
     print(" Inserción de works_in_teams")
     # leer el csv para que empiece a meter
@@ -98,7 +98,7 @@ def insercionMysql():
         city=datos[i]['city']
         name=datos[i]['name']
         location = Location(city, name) 
-        #obj.insert_data2(location)
+        obj.insert_data2(location)
 
     # Abre el archivo JSON y lee su contenido
     with open('./resources/Data_Mysql/skills.json', 'r') as archivo_json:
@@ -110,7 +110,7 @@ def insercionMysql():
     
         # por cada uno que lea, que haga un insert
         skill = Skill(name, id) 
-        #obj.insert_data3(skill)
+        obj.insert_data3(skill)
     
     # Abre el archivo JSON y lee su contenido
     with open('./resources/Data_Mysql/personSkill.json', 'r') as archivo_json:
@@ -222,7 +222,6 @@ def main():
                     print("Inserción en MongoDB")
                     insercionMongoDB()
                     
-                    
                 case 6:
                     print("Inserción Neo4j")
                     
@@ -244,7 +243,7 @@ def main():
                             
                             # Example: Create a node
                             node_properties = {"id":id, "name":name, "industry":industry }
-                            #created_node = neo4j_crud.create_node("Companies", node_properties)
+                            created_node = neo4j_crud.create_node("Companies", node_properties)
                             #print(f"Created Node: {created_node}")
                             
                     print(" Inserción de persons")
@@ -259,14 +258,16 @@ def main():
                             
                             # Example: Create a node
                             node_properties = {"id":id, "name":name, "age":age }
-                            #created_node = neo4j_crud.create_node("Persons", node_properties)
-                            #print(f"Created Node: {created_node}")
+                            created_node = neo4j_crud.create_node("Persons", node_properties)
+                            print(f"Created Node: {created_node}")
                             
                     print(" Inserción de works_at")
                     filename = "./resources/Data_Neo4j/works_at.csv"
-                    with open(filename, 'r') as file:
+                    with open(filename, 'r') as file:                  
                         reader = csv.reader(file)
-                        for row in reader:
+                        iterator = iter(reader)
+                        next(iterator)
+                        for row in iterator:
                             print(row)
                             person_id=row[0]
                             company_id=row[1]
@@ -275,21 +276,7 @@ def main():
                             
                             # Example: Create a node
                             node_properties = {"person_id":person_id, "company_id":company_id, "role":role, "location_id":location_id }
-                            #created_node = neo4j_crud.create_node("Works_at", node_properties)
-                            #print(f"Created Node: {created_node}")
-                            
-                            
-                            # person_id,company_id,role,location_id
-                            # 1,101,Engineer,205
-                            
-                            
-                            
-                    #create_relation = neo4j_crud.create_relatoionship("Persons","Companies","TRABAJA")
-                    #create_relation = neo4j_crud.create_relationshipAdrian("Persons","Works_at","TRABAJA")    #OK
-                    create_relation = neo4j_crud.create_relationshipAdrian2("Companies","Works_at","OFRECEPUESTO")    #OK
-                    
-                    #person_id,company_id,role,location_id
-                    #1,101,Engineer,205               
+                            neo4j_crud.create_relationshipAdrian2("Persons","Companies","Works_at",node_properties)  
                     
                 case 7:
                     print("")
