@@ -44,12 +44,47 @@ class Neo4jCRUD:
 
             query = (
                 f"MATCH (n:{labelOrigin}), (m:{labelEnd}) "
+                f"WHERE n.id = m.person_id "
+                f"CREATE (n)-[:{relationshipName}]->(m)"
+            )
+            #MATCH (b:Busines),(r:Review)
+            #WHERE b.business_id = r.business_id
+            #CREATE (b)-[:TIENE]->(r)
+            
+            
+           
+            # MATCH (b:Busines),(c:Checking)
+            # WHERE b.business_id = c.business_id
+            # CREATE (b)-[:RESERVA]->(c)
+
+            
+            
+            session.run(query)
+            
+            
+            
+     # En pruebas
+    def create_relationshipAdrian2(self,labelOrigin,labelEnd,relationshipName):
+         print(labelOrigin)
+         with self._driver.session() as session:
+
+            query = (
+                f"MATCH (n:{labelOrigin}), (m:{labelEnd}) "
                 f"WHERE n.id = m.company_id "
                 f"CREATE (n)-[:{relationshipName}]->(m)"
             )
             #MATCH (b:Busines),(r:Review)
             #WHERE b.business_id = r.business_id
             #CREATE (b)-[:TIENE]->(r)
+            
+            
+           
+            # MATCH (b:Busines),(c:Checking)
+            # WHERE b.business_id = c.business_id
+            # CREATE (b)-[:RESERVA]->(c)
+
+            
+            
             session.run(query)
         
         

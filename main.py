@@ -284,8 +284,10 @@ def main():
                             
                             
                             
-                    create_relation = neo4j_crud.create_relatoionship("Persons","Companies","TRABAJA")
-                    #create_relation = neo4j_crud.create_relationshipAdrian("Persons","Works_at","TRABAJA")
+                    #create_relation = neo4j_crud.create_relatoionship("Persons","Companies","TRABAJA")
+                    #create_relation = neo4j_crud.create_relationshipAdrian("Persons","Works_at","TRABAJA")    #OK
+                    create_relation = neo4j_crud.create_relationshipAdrian2("Companies","Works_at","OFRECEPUESTO")    #OK
+                    
                     #person_id,company_id,role,location_id
                     #1,101,Engineer,205               
                     

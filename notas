@@ -136,7 +136,8 @@ MATCH (ww:Works_at)  DELETE ww  OK
 MATCH (p:Persons)-[:TRABAJA]->(c:Companies)
 RETURN *, p.name, c.name
 
-
+MATCH (p:Persons)-[:TRABAJA]->(c:Works_at)
+RETURN *, p.name
 
 
 MATCH (b:Busines),(r:Review)
