@@ -46,6 +46,7 @@ person_id,company_id,role,location_id
 45,145,Environmental Scientist,238
 46,146,Cryptocurrency Analyst,238
 47,147,Software Developer,238
-48,148,Pharmaceutical Researcher,238
-49,149,Robotics Specialist,238
+49,148,Pharmaceutical Researcher,238
+49,148,Robotics Specialist,238
 50,150,Pilot,238
+50,149,Pilot,238

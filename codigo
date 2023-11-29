@@ -1,0 +1,35 @@
+                    '''
+                    uri = "bolt://localhost:7687"  
+                    user = "neo4j"
+                    password = "alberite"
+                    neo4j_crud = Neo4jCRUD(uri, user, password)
+
+                    query = "MATCH (p:Persons)-[w:Works_at]-(c:Companies {name:'ABC Corp' }) RETURN *,p.name, w.role, c.name"
+                    results = neo4j_crud.run_query(query)
+                    #print(results)
+                    
+                    for diccionario in results:
+                        dic=diccionario.get('c') 
+                        for key, value in dic.items():
+                            
+                            print(f"Clave: {key}, Valor: {value}")
+                            
+                    for diccionario in results:
+                        dic=diccionario.get('p') 
+                        for key, value in dic.items():
+                            print(f"Clave: {key}, Valor: {value}")
+                    
+                    try:
+                        for diccionario in results:
+                            dic=diccionario.get('w') 
+                            for key, value in dic.items():
+                                print(f"Clave: {key}, Valor: {value}")
+                    except:
+                        print()
+                        for elemento in dic:
+                            #print(elemento)
+                            for key, value in diccionario.items():
+                                if key=='p.name':
+                                    print(value)
+                                    break
+                                    print(f"Clave: {key}, Valor: {value}")'''

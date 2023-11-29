@@ -23,11 +23,12 @@ class MongoDBOperations:
     def create_person(self, person: NewPerson):
         result = self.collection.insert_one(person.__dict__)
         return result
-
+    '''
+    
     def read_person(self, filter_criteria):
         result = self.collection.find(filter_criteria)
         persons = [Person(**person) for person in result]
-        return persons'''
+        return persons
 
     def update_person(self, filter_criteria, update_data):
         result = self.collection.update_many(filter_criteria, {'$set': update_data})

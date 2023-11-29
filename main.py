@@ -181,11 +181,11 @@ def cargaDatos():
     #print("Inserción en MySql")
     #insercionMysql()
 
-    print("Inserción en MongoDB")
-    insercionMongoDB()
-
     #print("Inserción en MongoDB")
-    #insercionNeo4j()
+    #insercionMongoDB()
+
+    print("Inserción en MongoDB")
+    insercionNeo4j()
 
 
 
@@ -195,6 +195,15 @@ def main():
         print("0. Carga de datos.")
         print("1. Personas y sus roles en una empresa concreta.")################ Neo4j
         print("2. Personas con el mismo rol en diferentes empresas.")
+        
+# 2 RAFA
+MATCH (c:Companies)-[w2:Works_at]-(p:Persons),
+(c1:Companies)-[w:Works_at]-(p2:Persons)
+where w2.role=w.role and c.name<>c1.name and p.id=p2.id
+return p
+        
+        
+        
         print("3. Empresas comunes entre dos personas.")#########################
         print("4. Personas y sus funciones en un equipo específico.") 
         
@@ -222,44 +231,78 @@ def main():
                     password = "alberite"
                     neo4j_crud = Neo4jCRUD(uri, user, password)
                     
-                    query = "MATCH (p:Persons)-[w:Works_at]-(c:Companies {name:'ABC Corp' }) RETURN *,p.name, w.role, c.name"
+                    query = "MATCH (p:Persons)-[w:Works_at]-(c:Companies {name:'ABC Corp' }) RETURN p.name, w.role, c.name"
+                    
                     results = neo4j_crud.run_query(query)
-                    #print(results)
-                    
-                    for diccionario in results:
-                        dic=diccionario.get('c') 
-                        for key, value in dic.items():
-                            
-                            print(f"Clave: {key}, Valor: {value}")
-                            
-                    for diccionario in results:
-                        dic=diccionario.get('p') 
-                        for key, value in dic.items():
-                            print(f"Clave: {key}, Valor: {value}")
-                    
-                    try:
-                        for diccionario in results:
-                            dic=diccionario.get('w') 
-                            for key, value in dic.items():
-                                print(f"Clave: {key}, Valor: {value}")
-                    except:
-                        print()
-                        for elemento in dic:
-                            #print(elemento)
-                            for key, value in diccionario.items():
-                                if key=='p.name':
-                                    print(value)
-                                    break
-                                    print(f"Clave: {key}, Valor: {value}")
-                           
+                    for i in range (0 ,len(results),1):
+                        dic=results[0]
+                        print(dic['p.name'] + " is an " + dic['w.role'], "en la empresa: '" + dic['c.name'] + "'" )
+                       
                     
                     
-                case 3:
+                    
+                case 2: # mal
                     print("")
-                case 4:
+                    
+                    uri = "bolt://localhost:7687"  
+                    user = "neo4j"
+                    password = "alberite"
+                    neo4j_crud = Neo4jCRUD(uri, user, password)
+                    
+                    "2. Personas con el mismo rol en diferentes empresas."
+                    query = "MATCH (p:Persons)-[w:Works_at {role:'Designer'}]-(c:Companies) RETURN  p.name, w.role, c.name"
+                    
+                    results = neo4j_crud.run_query(query)
+                    for i in range (0 ,len(results),1):
+                        dic=results[0]
+                        print(dic['p.name'] + " is an " + dic['w.role'], "en la empresa: '" + dic['c.name'] + "'" )
+                        
+                    '''               
+                    MATCH (p:Persons)-[w:Works_at]-(c:Companies)
+                    WITH p, w.role AS Role
+
+                    WHERE NOT(Role IS NULL OR Role = '')
+                    WITH Role, COLLECT(p.name) AS Persons
+
+                    WHERE SIZE(Role) > 1
+                    RETURN Role, Persons  '''
+                    
+                    
+                case 3: # mal 
                     print("")
+                    uri = "bolt://localhost:7687"  
+                    user = "neo4j"
+                    password = "alberite"
+                    neo4j_crud = Neo4jCRUD(uri, user, password)
+                    
+                    "3. Empresas comunes entre dos personas."
+                    query = "MATCH (p1:Persons {name: 'Mia'})-[:Works_at]->(c:Companies)<-[:Works_at]-(p2:Person {name: 'Charlie'}) RETURN DISTINCT c.name AS CommonCompanies"
+                   
+                    results = neo4j_crud.run_query(query)
+                    for i in range (0 ,len(results),1):
+                        dic=results[0]
+                        print(dic['p.name'] + " is an " + dic['w.role'], "en la empresa: '" + dic['c.name'] + "'" )
+                        
+                        
+
+                        
                 case 5:
                     print("")
+                    "5. Muestra todos los equipos con el número de personas que los componen."
+                    '''
+                    db.teams.aggregate(
+                    {$lookup: {from: 'work_in_team', localField: "team_id", foreignField: "team_id", as: 'info'}},
+                    {$unwind:'$info'},
+                    {$group: {_id: "$team_id", total_persons: {"$sum": 1} }},
+                    {$project: { _id: 1 , total_persons: 1 }});'''
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
                 case 6:
                     print("")
                 case 7:

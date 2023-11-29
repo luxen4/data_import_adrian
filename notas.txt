@@ -341,3 +341,15 @@ db.works_in_team.find(
     {
         "$project": { "name": $info.name,  "address": 0  }
     }
+
+
+
+
+
+
+
+# 2 RAFA
+MATCH (c:Companies)-[w2:Works_at]-(p:Persons),
+(c1:Companies)-[w:Works_at]-(p2:Persons)
+where w2.role=w.role and c.name<>c1.name and p.id=p2.id
+return p
