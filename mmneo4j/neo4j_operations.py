@@ -109,3 +109,14 @@ class Neo4jCRUD:
             "DETACH DELETE n"
         )
         tx.run(query, node_id=node_id)
+        
+        
+        
+    # Función para ejecutar una consulta
+    def run_query(self,query):
+        with GraphDatabase.driver("bolt://localhost:7687" , auth=("neo4j", "alberite")) as driver:
+            with driver.session() as session:
+                result = session.run(query)
+                return result.data()
+
+   

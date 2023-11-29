@@ -41,11 +41,7 @@ DB_PORT = "3306"
 '''
 
 
-
-
- 
-
-# Función de insertado en MongoDB
+# Función que carga los registros en MongoDB
 def insercionMongoDB():
     
     # Conexión a mongo
@@ -86,7 +82,7 @@ def insercionMongoDB():
             worksInTeam = NewWorks_in_Team(person_id= row[0], team_id=row[1], role=row[2])
             mongo_operations.create_team(worksInTeam) 
 
-
+# Función que carga los registros en Mysql
 def insercionMysql():
     obj = Database(DB_HOST,DB_USER,DB_PASSWORD,DB_DATABASE,DB_PORT)
     # Abre el archivo JSON y lee su contenido 
@@ -125,28 +121,86 @@ def insercionMysql():
         person_skill = Person_Skill(person_id, skill_id, proficiency) 
         obj.insert_data4(person_skill)
 
+# Función que carga los registros en neo4j
+def insercionNeo4j():
+    # Conexión a neo4j
+    uri = "bolt://localhost:7687"  
+    user = "neo4j"
+    password = "alberite"
+    neo4j_crud = Neo4jCRUD(uri, user, password)
+    
+    print(" Inserción de companies")
+    filename = "./resources/Data_Neo4j/companies.csv"
+    with open(filename, 'r') as file:
+        reader = csv.reader(file)
+        for row in reader:
+            print(row)
+            id=row[0]
+            name=row[1]
+            industry=row[2]
+            
+            # Example: Create a node
+            node_properties = {"id":id, "name":name, "industry":industry }
+            created_node = neo4j_crud.create_node("Companies", node_properties)
+            #print(f"Created Node: {created_node}")
+            
+    print(" Inserción de persons")
+    filename = "./resources/Data_Neo4j/persons.csv"
+    with open(filename, 'r') as file:
+        reader = csv.reader(file)
+        for row in reader:
+            print(row)
+            id=row[0]
+            name=row[1]
+            age=row[2]
+            
+            # Example: Create a node
+            node_properties = {"id":id, "name":name, "age":age }
+            created_node = neo4j_crud.create_node("Persons", node_properties)
+            print(f"Created Node: {created_node}")
+            
+    print(" Inserción de works_at")
+    filename = "./resources/Data_Neo4j/works_at.csv"
+    with open(filename, 'r') as file:                  
+        reader = csv.reader(file)
+        iterator = iter(reader)
+        next(iterator)
+        for row in iterator:
+            print(row)
+            person_id=row[0]
+            company_id=row[1]
+            role=row[2]
+            location_id=row[3]
+            
+            # Example: Create a node
+            node_properties = {"person_id":person_id, "company_id":company_id, "role":role, "location_id":location_id }
+            neo4j_crud.create_relationshipAdrian2("Persons","Companies","Works_at",node_properties) 
+
+
+def cargaDatos():
+    #print("Inserción en MySql")
+    #insercionMysql()
+
+    print("Inserción en MongoDB")
+    insercionMongoDB()
+
+    #print("Inserción en MongoDB")
+    #insercionNeo4j()
 
 
 
-
-
-
-
-
-
-
-def main():
-    #bookstore = Bookstore()
-    #bookstore.loadDataBooksFromJson()
-    '''  
+def main(): 
     while True:
         choice = int(input("Enter your choice: "))
         print("0. Carga de datos.")
-        print("1. Personas y sus roles en una empresa concreta.")
+        print("1. Personas y sus roles en una empresa concreta.")################ Neo4j
         print("2. Personas con el mismo rol en diferentes empresas.")
-        print("3. Empresas comunes entre dos personas.")
-        print("4. Personas y sus funciones en un equipo específico.")
+        print("3. Empresas comunes entre dos personas.")#########################
+        print("4. Personas y sus funciones en un equipo específico.") 
+        
         print("5. Muestra todos los equipos con el número de personas que los componen.")
+        
+        
         print("6. Muestra los equipos con el número total de proyectos a los que están asociados.")
         print("7. Obtener todas las skills en las que una persona tiene al menos un nivel específico de proficiency")
         print("8. Encontrar todas las personas que tienen skill en al menos una skill en común con otra persona (es decir, encontrar personas con skills similares).")
@@ -155,129 +209,59 @@ def main():
 
         try:
             match choice:
+                case 0:
+                    cargaDatos()
                 case 1:
                     print("")
-                case 2:
-                    print("")
-                case 3:
-                    print("")
-                case 4:
-                    print("")
-                case 5:
-                    print("")
-                case 6:
-                    print("")
-                case 7:
-                    print("")
-                case 8:
-                    print("")
-                case 9:
-                    print("")
-                case 10:
-                    print("Goodbye!")
-                    break
-                case _:
+                    # 1
+                    # MATCH (p:Persons)-[w:Works_at]-(c:Companies {name:'ABC Corp' })
+                    # RETURN *,p.name, w.role, c.name
                     
-                    print("Invalid choice. Please try again.")
-        except ValueError:
-            print("Invalid choice. Please try again.")
-        '''
-
-
-
-    while True:
-        choice = int(input("Enter your choice: "))
-        
-        print("1. Neo4j_persons.csv.")
-        print("2. Neo4j_empresas.csv")
-        print("3. Neo4j_works_at.csv.")
-        
-        print("4. MySql_locations.json.")
-        print("5. MySql_skills.json.")
-        print("6. MySql_has_skill.json")
-        
-        print("7. Mongo_projects.csv")
-        print("8. Mongo_teams.csv")
-        print("9. Mongo_works_in_team.csv")
-        
-        print("10. EXIT carga de datos")
-
-        try:
-            match choice:
-                case 1:
-                    print("")
-                    
-                    
-                    
-                    
-                    
-                case 2:
-                    print("")
-                case 3:
-                    print("")
-                case 4:
-                    print("Inserción en MySql")
-                    insercionMysql()
-                case 5:
-                    print("Inserción en MongoDB")
-                    insercionMongoDB()
-                    
-                case 6:
-                    print("Inserción Neo4j")
-                    
-                    # Conexión a neo4j
                     uri = "bolt://localhost:7687"  
                     user = "neo4j"
                     password = "alberite"
                     neo4j_crud = Neo4jCRUD(uri, user, password)
                     
-                    print(" Inserción de companies")
-                    filename = "./resources/Data_Neo4j/companies.csv"
-                    with open(filename, 'r') as file:
-                        reader = csv.reader(file)
-                        for row in reader:
-                            print(row)
-                            id=row[0]
-                            name=row[1]
-                            industry=row[2]
-                            
-                            # Example: Create a node
-                            node_properties = {"id":id, "name":name, "industry":industry }
-                            created_node = neo4j_crud.create_node("Companies", node_properties)
-                            #print(f"Created Node: {created_node}")
-                            
-                    print(" Inserción de persons")
-                    filename = "./resources/Data_Neo4j/persons.csv"
-                    with open(filename, 'r') as file:
-                        reader = csv.reader(file)
-                        for row in reader:
-                            print(row)
-                            id=row[0]
-                            name=row[1]
-                            age=row[2]
-                            
-                            # Example: Create a node
-                            node_properties = {"id":id, "name":name, "age":age }
-                            created_node = neo4j_crud.create_node("Persons", node_properties)
-                            print(f"Created Node: {created_node}")
-                            
-                    print(" Inserción de works_at")
-                    filename = "./resources/Data_Neo4j/works_at.csv"
-                    with open(filename, 'r') as file:                  
-                        reader = csv.reader(file)
-                        iterator = iter(reader)
-                        next(iterator)
-                        for row in iterator:
-                            print(row)
-                            person_id=row[0]
-                            company_id=row[1]
-                            role=row[2]
-                            location_id=row[3]
-                            
-                            # Example: Create a node
-                            node_properties = {"person_id":person_id, "company_id":company_id, "role":role, "location_id":location_id }
-                            neo4j_crud.create_relationshipAdrian2("Persons","Companies","Works_at",node_properties)  
+                    query = "MATCH (p:Persons)-[w:Works_at]-(c:Companies {name:'ABC Corp' }) RETURN *,p.name, w.role, c.name"
+                    results = neo4j_crud.run_query(query)
+                    #print(results)
                     
+                    for diccionario in results:
+                        dic=diccionario.get('c') 
+                        for key, value in dic.items():
+                            
+                            print(f"Clave: {key}, Valor: {value}")
+                            
+                    for diccionario in results:
+                        dic=diccionario.get('p') 
+                        for key, value in dic.items():
+                            print(f"Clave: {key}, Valor: {value}")
+                    
+                    try:
+                        for diccionario in results:
+                            dic=diccionario.get('w') 
+                            for key, value in dic.items():
+                                print(f"Clave: {key}, Valor: {value}")
+                    except:
+                        print()
+                        for elemento in dic:
+                            #print(elemento)
+                            for key, value in diccionario.items():
+                                if key=='p.name':
+                                    print(value)
+                                    break
+                                    print(f"Clave: {key}, Valor: {value}")
+                           
+                    
+                    
+                case 3:
+                    print("")
+                case 4:
+                    print("")
+                case 5:
+                    print("")
+                case 6:
+                    print("")
                 case 7:
                     print("")
                 case 8:
@@ -292,8 +276,6 @@ def main():
                     print("Invalid choice. Please try again.")
         except ValueError:
             print("Invalid choice. Please try again.")
-
-
+        
 if __name__ == "__main__":
     main()
-    
