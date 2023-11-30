@@ -1,4 +1,11 @@
-    
+    CONSULTAS SIMPLES MOMGO
+    db.works_in_team.find({'team_id':'656'})  ---> Salen 4 que lo he preparado
+
+
+
+
+
+
 # 1
 # MATCH (p:Persons)-[w:Works_at]-(c:Companies {name:'ABC Corp' })
 # RETURN *,p.name, w.role, c.name
@@ -29,35 +36,36 @@ db.works_in_team.aggregate(
 
 
 # 5. Muestra todos los equipos con el número de personas que los componen.
-db.teams.aggregate(
-    {$lookup: {from: 'work_in_team', localField: "team_id", foreignField: "team_id", as: 'info'}},
-    {$unwind:'$info'},
-    {$group: {_id: "$team_id", total_persons: {"$sum": 1} }},
-    {$project: { _id: 1 , total_persons: 1 }});
+'''
+db.works_in_team.aggregate(
+{$lookup: {from: 'teams', localField: "team_id", foreignField: "team_id", as: 'info'}},
+{$unwind:'$info'},
+{$group: {_id: "$info.name", total_persons: {"$sum": 1}} },
+{$project: { _id: 1 , total_persons: 1 }});'''
 
-
-
-
-db.teams.aggregate(
-    {$lookup: {from: 'work_in_team', localField: "team_id", foreignField: "team_id", as: 'info'}},
-    {$group: {_id: "$team_id", total_persons: {"$sum": 1} }},
-    {$project: { _id: 1 , name:'$name', total_persons: 1 }});
 
 
 
 
 # 6. Muestra los equipos con el número total de proyectos a los que están asociados.
+
+
+
 db.teams.aggregate(
     {$lookup: {from: 'projects', localField: "project_id", foreignField: "project_id", as: 'info'}},
-    {$group: {_id: "$name", total_proyectos: {"$sum": 1} }},
+    {$group: {_id: "$project_id", total_proyectos: {"$sum": 1},  "nombre_equipo": {"$first": "$name"}}},
     {$sort: {total_proyectos: -1}},
-    {$project: { _id: 1 ,  total_proyectos: 1 }}
+    {$project: { _id: 0 , nombre_equipo:1, total_proyectos: 1 }}
 );
+
+
+
+
 
 # 7. Obtener todas las skills en las que una persona tiene al menos un nivel específico de proficiency")
 select s.name from skills s 
 inner join Person_Skill p on p.skill_id= s.id  
-group by proficiency having count(person_id) >1 
+group by proficiency having count(person_id) > 1 
 
 
 # 8. Encontrar todas las personas que tienen skill en al menos una skill en común con otra persona 
@@ -72,3 +80,34 @@ De mysql sacar location
 DE mongo sacar el nombre e id de los teams
 De neo4j sacar persons(id)
 DE Mongo, sacar los nombres de proyectos asociados
+
+
+
+
+
+                    '''      
+                    #query = "MATCH (p:Persons)-[w:Works_at {role:'Designer'}]-(c:Companies) RETURN  p.name, w.role, c.name"         
+                    MATCH (p:Persons)-[w:Works_at]-(c:Companies)
+                    WITH p, w.role AS Role
+
+                    WHERE NOT(Role IS NULL OR Role = '')
+                    WITH Role, COLLECT(p.name) AS Persons
+
+                    WHERE SIZE(Role) > 1
+                    RETURN Role, Persons  '''
+
+
+                    MATCH (p1:Persons {name: 'Mia'})-[:Works_at]->(c:Companies)<-[:Works_at]-(p2:Person {name: 'Charlie'}) RETURN DISTINCT c.name AS CommonCompanies
+
+
+
+
+
+
+
+
+                    db.teams.aggregate(
+    {$lookup: {from: 'work_in_team', localField: "team_id", foreignField: "team_id", as: 'info'}},
+    {$group: {_id: "$team_id", total_persons: {"$sum": 1} }},
+    {$project: { _id: 1 , name:'$name', total_persons: 1 }});
+

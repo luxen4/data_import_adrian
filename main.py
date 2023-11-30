@@ -16,19 +16,22 @@ import json
 import os
 
 
-# Este es el archivo que contiene el menú de la aplicación y que dependiendo de la opción seleccionada tomaremos una u otra acción
-# Preparar los contenedores de MySql, Mongo y Neo4j  Hecho
-# Insertar datos en MySql, prvia lectura de los csv_s
-# 25/11/2023 Tratar de hacer los inserts de MySql
+# Conexión a neo4j
+uriNeo4j = "bolt://localhost:7687"  
+userNeo4j = "neo4j"
+passwordNeo4j = "alberite"
+neo4j_crud = Neo4jCRUD(uriNeo4j, userNeo4j, passwordNeo4j)
+
 
 
 # Para docker Mysql
+'''
 DB_HOST = "localhost"
 DB_USER = "root"
 DB_PASSWORD = "my-secret-pw"
 DB_DATABASE = "dataimport"
-DB_PORT = "8889"
- 
+DB_PORT = "8888"
+'''
 
 
 '''
@@ -40,12 +43,26 @@ DB_DATABASE = "wineclub"
 DB_PORT = "3306"
 '''
 
+dabaseMongo="dataimport"
+portMongo="8889"
+
+
+DB_HOST = "localhost"
+DB_USER = "root"
+DB_PASSWORD = "my-secret-pw"
+DB_DATABASE = "dataimport"
+DB_PORT = "8888"
+
+
+
+
+
 
 # Función que carga los registros en MongoDB
 def insercionMongoDB():
     
     # Conexión a mongo
-    mongo_operations = MongoDBOperations('dataimport', 'works','8889')   # funciona OK
+    mongo_operations = MongoDBOperations(dabaseMongo, 'works',portMongo)   # funciona OK
 
     print(" Inserción de projects")
     # leer el csv para que empiece a meter
@@ -58,7 +75,7 @@ def insercionMongoDB():
             
             
     # Conexión a mongo
-    mongo_operations = MongoDBOperations('dataimport', 'teams','8889')   # funciona OK
+    mongo_operations = MongoDBOperations(dabaseMongo, 'teams',portMongo)   # funciona OK
             
     print(" Inserción de teams")
     # leer el csv para que empiece a meter
@@ -71,7 +88,7 @@ def insercionMongoDB():
             
             
         # Conexión a mongo
-    mongo_operations = MongoDBOperations('dataimport', 'works_in_team','8889')   # funciona OK
+    mongo_operations = MongoDBOperations(dabaseMongo, 'works_in_team',portMongo)   # funciona OK
             
     print(" Inserción de works_in_teams")
     # leer el csv para que empiece a meter
@@ -84,18 +101,22 @@ def insercionMongoDB():
 
 # Función que carga los registros en Mysql
 def insercionMysql():
-    obj = Database(DB_HOST,DB_USER,DB_PASSWORD,DB_DATABASE,DB_PORT)
+    try:
+        obj = Database(DB_HOST,DB_USER,DB_PASSWORD,DB_DATABASE,DB_PORT)
+    except Exception as ex :
+        print(ex)
+        
     # Abre el archivo JSON y lee su contenido 
     # por cada uno que lea, que haga un insert
     with open('./resources/Data_Mysql/locations.json', 'r') as archivo_json:
         datos = json.load(archivo_json)
-        
+       
     for i in range(0, len(datos), 1):
         city=datos[i]['city']
         name=datos[i]['name']
         location = Location(city, name) 
         obj.insert_data2(location)
-
+    
     # Abre el archivo JSON y lee su contenido
     with open('./resources/Data_Mysql/skills.json', 'r') as archivo_json:
         datos = json.load(archivo_json)
@@ -120,26 +141,19 @@ def insercionMysql():
         # por cada uno que lea, que haga un insert
         person_skill = Person_Skill(person_id, skill_id, proficiency) 
         obj.insert_data4(person_skill)
-
+        
 # Función que carga los registros en neo4j
 def insercionNeo4j():
-    # Conexión a neo4j
-    uri = "bolt://localhost:7687"  
-    user = "neo4j"
-    password = "alberite"
-    neo4j_crud = Neo4jCRUD(uri, user, password)
     
     print(" Inserción de companies")
     filename = "./resources/Data_Neo4j/companies.csv"
     with open(filename, 'r') as file:
         reader = csv.reader(file)
         for row in reader:
-            print(row)
             id=row[0]
             name=row[1]
             industry=row[2]
             
-            # Example: Create a node
             node_properties = {"id":id, "name":name, "industry":industry }
             created_node = neo4j_crud.create_node("Companies", node_properties)
             #print(f"Created Node: {created_node}")
@@ -149,15 +163,13 @@ def insercionNeo4j():
     with open(filename, 'r') as file:
         reader = csv.reader(file)
         for row in reader:
-            print(row)
             id=row[0]
             name=row[1]
             age=row[2]
             
-            # Example: Create a node
             node_properties = {"id":id, "name":name, "age":age }
             created_node = neo4j_crud.create_node("Persons", node_properties)
-            print(f"Created Node: {created_node}")
+            #print(f"Created Node: {created_node}")
             
     print(" Inserción de works_at")
     filename = "./resources/Data_Neo4j/works_at.csv"
@@ -166,26 +178,24 @@ def insercionNeo4j():
         iterator = iter(reader)
         next(iterator)
         for row in iterator:
-            print(row)
             person_id=row[0]
             company_id=row[1]
             role=row[2]
             location_id=row[3]
             
-            # Example: Create a node
             node_properties = {"person_id":person_id, "company_id":company_id, "role":role, "location_id":location_id }
             neo4j_crud.create_relationshipAdrian2("Persons","Companies","Works_at",node_properties) 
 
 
 def cargaDatos():
-    #print("Inserción en MySql")
-    #insercionMysql()
+    print("Inserción en MySql")
+    insercionMysql()
 
     #print("Inserción en MongoDB")
     #insercionMongoDB()
 
-    print("Inserción en MongoDB")
-    insercionNeo4j()
+    #print("Inserción en MongoDB")
+    #insercionNeo4j()
 
 
 
@@ -195,12 +205,6 @@ def main():
         print("0. Carga de datos.")
         print("1. Personas y sus roles en una empresa concreta.")################ Neo4j
         print("2. Personas con el mismo rol en diferentes empresas.")
-        
-# 2 RAFA
-MATCH (c:Companies)-[w2:Works_at]-(p:Persons),
-(c1:Companies)-[w:Works_at]-(p2:Persons)
-where w2.role=w.role and c.name<>c1.name and p.id=p2.id
-return p
         
         
         
@@ -220,91 +224,110 @@ return p
             match choice:
                 case 0:
                     cargaDatos()
+                    
                 case 1:
-                    print("")
-                    # 1
-                    # MATCH (p:Persons)-[w:Works_at]-(c:Companies {name:'ABC Corp' })
-                    # RETURN *,p.name, w.role, c.name
-                    
-                    uri = "bolt://localhost:7687"  
-                    user = "neo4j"
-                    password = "alberite"
-                    neo4j_crud = Neo4jCRUD(uri, user, password)
-                    
                     query = "MATCH (p:Persons)-[w:Works_at]-(c:Companies {name:'ABC Corp' }) RETURN p.name, w.role, c.name"
-                    
                     results = neo4j_crud.run_query(query)
                     for i in range (0 ,len(results),1):
                         dic=results[0]
+                        
                         print(dic['p.name'] + " is an " + dic['w.role'], "en la empresa: '" + dic['c.name'] + "'" )
                        
                     
                     
                     
-                case 2: # mal
-                    print("")
-                    
-                    uri = "bolt://localhost:7687"  
-                    user = "neo4j"
-                    password = "alberite"
-                    neo4j_crud = Neo4jCRUD(uri, user, password)
-                    
-                    "2. Personas con el mismo rol en diferentes empresas."
-                    query = "MATCH (p:Persons)-[w:Works_at {role:'Designer'}]-(c:Companies) RETURN  p.name, w.role, c.name"
-                    
+                case 2: 
+                    # 2. Personas con el mismo rol en diferentes empresas." RAFA OK  Yvone(Pilot) con Alpha Airlines y Robo Robers
+                    query = (
+                    f" MATCH (c:Companies)-[w2:Works_at]-(p:Persons),"
+                    f"       (c1:Companies)-[w:Works_at]-(p2:Persons) "
+                    f"       where w2.role = w.role and c.name <> c1.name and p.id = p2.id "
+                    f"       return p.name, w.role, c.name" )
+                        
                     results = neo4j_crud.run_query(query)
                     for i in range (0 ,len(results),1):
-                        dic=results[0]
+                        dic=results[i]
                         print(dic['p.name'] + " is an " + dic['w.role'], "en la empresa: '" + dic['c.name'] + "'" )
-                        
-                    '''               
-                    MATCH (p:Persons)-[w:Works_at]-(c:Companies)
-                    WITH p, w.role AS Role
-
-                    WHERE NOT(Role IS NULL OR Role = '')
-                    WITH Role, COLLECT(p.name) AS Persons
-
-                    WHERE SIZE(Role) > 1
-                    RETURN Role, Persons  '''
+ 
+                case 3: # OK 3. Empresas comunes entre dos personas."
                     
-                    
-                case 3: # mal 
-                    print("")
-                    uri = "bolt://localhost:7687"  
-                    user = "neo4j"
-                    password = "alberite"
-                    neo4j_crud = Neo4jCRUD(uri, user, password)
-                    
-                    "3. Empresas comunes entre dos personas."
-                    query = "MATCH (p1:Persons {name: 'Mia'})-[:Works_at]->(c:Companies)<-[:Works_at]-(p2:Person {name: 'Charlie'}) RETURN DISTINCT c.name AS CommonCompanies"
+                    query = (
+                    f"MATCH (c:Companies)-[w2:Works_at]-(p:Persons),"
+                    f"      (c1:Companies)-[w:Works_at]-(p2:Persons) "
+                    f"      where c.name = c1.name and p.id <> p2.id "
+                    f"      return p.id, p.name, w.company_id ,c.name" )
+                   
                    
                     results = neo4j_crud.run_query(query)
                     for i in range (0 ,len(results),1):
-                        dic=results[0]
-                        print(dic['p.name'] + " is an " + dic['w.role'], "en la empresa: '" + dic['c.name'] + "'" )
+                        dic=results[i]
+                        print(dic['p.id'] + "-" + dic['p.name'] + "-   " + dic['w.company_id'], "-'" + dic['c.name'] + "'" )
                         
-                        
+                case 5: # OK 5. Muestra todos los equipos con el número de personas que los componen."
+                    print("Cuidado que salen 4, que lo he trucado el csv")
+                    
 
-                        
-                case 5:
-                    print("")
-                    "5. Muestra todos los equipos con el número de personas que los componen."
-                    '''
-                    db.teams.aggregate(
-                    {$lookup: {from: 'work_in_team', localField: "team_id", foreignField: "team_id", as: 'info'}},
-                    {$unwind:'$info'},
-                    {$group: {_id: "$team_id", total_persons: {"$sum": 1} }},
-                    {$project: { _id: 1 , total_persons: 1 }});'''
+                    
+                    lookup={"from": 'teams', "localField": 'team_id', "foreignField": 'team_id', "as": 'info'}
+                    
+                     # Example aggregation pipeline
+                    pipeline = [
+                        {"$lookup": lookup},
+                        {"$unwind":'$info'},
+                        {"$group": {"_id": "$info.name", "total_persons": {"$sum": 1}}},
+                        {"$project": {"_id": 1 , "total_persons": 1 }} 
+                    ]
                     
                     
+                    # Example aggregation pipeline
+                    #pipeline = [
+                    #    {"$group": {"_id": "$department", "averageAge": {"$avg": "$age"}}},
+                    #    {"$sort": {"averageAge": -1}}
+                    #]
+                                        
+                    
+                    mongo_operations = MongoDBOperations(dabaseMongo, 'works_in_team',portMongo)   # funciona OK run_aggregation
+                    lista = mongo_operations.run_aggregation(pipeline)
+                    #print (lista)
                     
                     
-                    
-                    
+                    for list in lista:
+                        print( str(list['total_persons']) + " personas en " + list['_id']  )
+
                     
                     
                 case 6:
-                    print("")
+                    # 6. Casi ---Muestra los equipos con el número total de proyectos a los que están asociados.
+                    '''
+                    db.teams.aggregate(
+                    {$lookup: {from: 'projects', localField: "project_id", foreignField: "project_id", as: 'info'}},
+                    {$group: {_id: "$project_id", total_proyectos: {"$sum": 1},  "nombre_equipo": {"$first": "$name"}}},
+                    {$sort: {total_proyectos: -1}},
+                    {$project: { _id: 0 , nombre_equipo:1, total_proyectos: 1 }}
+                    );'''
+                    
+                    lookup={"from": 'projects', "localField": 'project_id', "foreignField": 'project_id', "as": 'info'}
+                    
+                     # Example aggregation pipeline
+                    pipeline = [
+                        {"$lookup": lookup},
+                        {"$unwind":'$info'},
+                        {"$group": {"_id": "$project_id", "total_proyectos": {"$sum": 1}, "nombre_equipo": {"$first": "$name"}}},
+                        {"$project": {"_id": 0 , "nombre_equipo":1, "total_proyectos": 1  }} 
+                    ]
+                    
+                    
+                    mongo_operations = MongoDBOperations(dabaseMongo, 'teams',portMongo)   # funciona OK run_aggregation
+                    lista = mongo_operations.run_aggregation(pipeline)
+                    #print (lista)
+                    
+                    
+                    for list in lista:
+                        print( str(list['total_proyectos']) + " proyectos en " + list['nombre_equipo']  )
+
+
+                    
+                    
                 case 7:
                     print("")
                 case 8:

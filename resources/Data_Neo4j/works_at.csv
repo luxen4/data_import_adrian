@@ -43,9 +43,9 @@ person_id,company_id,role,location_id
 42,142,Automotive Engineer,240
 43,143,Energy Analyst,240
 44,144,Innovation Specialist,238
-45,145,Environmental Scientist,238
+45,144,Environmental Scientist,238
 46,146,Cryptocurrency Analyst,238
-47,147,Software Developer,238
+47,146,Software Developer,238
 49,148,Pharmaceutical Researcher,238
 49,148,Robotics Specialist,238
 50,150,Pilot,238

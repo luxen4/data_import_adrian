@@ -4,6 +4,16 @@ docker pull mysql
 docker run --name mysq -p 8888:3306 -v mysqlVolume:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mysql  OK
 mysql -u root -p    para entrar desde exec y a la cmd
 Enter password:my-secret-pw
+create database dataimport;
+use dataimport;
+meter las create tables a webbo 
+(están en otro archivo)
+
+
+
+
+
+
 
 Hacer un mongoVolume
 docker pull mongo
@@ -12,7 +22,7 @@ docker exec -it mongo bash
 mongosh
 use dataimport
 
-text>>
+
 
 neo4j
 docker pull neo4j
@@ -24,7 +34,7 @@ python extension pack           como extensión
 '''
 
 
-
+pip
 '''
 Para importar desde la cmd
 https://stackoverflow.com/questions/32877671/importerror-no-module-named-mysql

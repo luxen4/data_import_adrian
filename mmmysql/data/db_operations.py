@@ -30,7 +30,6 @@ class Database:
         self.connection.commit()
 
 
-
     def insert_data(self, employee):
         insert_query = "INSERT INTO employees (name, age, department) VALUES (%s, %s, %s)"
         data = (employee.name, employee.age, employee.department)
@@ -38,9 +37,7 @@ class Database:
         self.connection.commit()
         #Cogemos el id de la última fila insertada
         employee_id = self.cursor.lastrowid
-        return Employee(employee.name, employee.age, employee.department, employee_id)
-
-
+        #return Employee(employee.name, employee.age, employee.department, employee_id)
 
 
 
@@ -50,8 +47,9 @@ class Database:
         result = self.cursor.fetchall()
         employees = []
         for row in result:
-            employee = Employee(row[1], row[2], row[3], row[0])  #Cuidado con el orden
-            employees.append(employee)
+            #employee = Employee(row[1], row[2], row[3], row[0])  #Cuidado con el orden
+            #employees.append(employee)
+            print()
         return employees
 
     def update_data(self, employee):
@@ -108,9 +106,3 @@ class Database:
         #Cogemos el id de la última fila insertada
         person_skill_id = self.cursor.lastrowid
         return Person_Skill(person_skill.person_id, person_skill.skill_id, person_skill.proficiency, person_skill_id)
-
-        '''
-        id_has_skill INT AUTO_INCREMENT PRIMARY KEY,
-        id_person int not null,
-        id_skill int not null,
-        proficiency nvarchar (30) not null'''

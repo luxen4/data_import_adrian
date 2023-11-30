@@ -1,0 +1,41 @@
+Creación de tablas 
+'''
+MySql                                  
+create database dataimport; 
+use dataimport;
+
+                                                locations.json  {"id": 201,"name": "TechHub", "city": "Silicon Valley" },
+
+create table location(
+id_location INT AUTO_INCREMENT PRIMARY KEY,
+name nvarchar (30) not null,
+city nvarchar(50) not null
+); 
+ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;  
+   
+   
+   
+   
+                                                skill.json      {"id": 301,"name": "Software Development" },
+    
+create table skill(
+    id_skill INT AUTO_INCREMENT PRIMARY KEY,
+    name nvarchar (30) not null
+);
+ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;  
+   
+
+                                                personSkill.json  {"person_id": 1,"skill_id": 301, "proficiency": "Intermediate"}
+   
+create table person_skill(
+    id_person_skill INT AUTO_INCREMENT PRIMARY KEY,
+    id_person int not null,
+    id_skill int not null,
+    proficiency nvarchar (30) not null
+);
+
+
+
+ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;  
+
+'''

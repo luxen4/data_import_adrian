@@ -39,7 +39,7 @@ class Neo4jCRUD:
             
     # En pruebas
     def create_relationshipAdrian2(self,labelOrigin,labelEnd,relationshipName,properties):
-         print(labelOrigin)
+        
          with self._driver.session() as session:
 
             query = (
