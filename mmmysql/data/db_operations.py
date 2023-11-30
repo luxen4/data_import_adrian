@@ -42,15 +42,16 @@ class Database:
 
 
     def get_all_data(self):
-        select_all_query = "SELECT * FROM employees"
+        select_all_query = "SELECT * FROM location"
         self.cursor.execute(select_all_query)
         result = self.cursor.fetchall()
-        employees = []
+        locations = []
         for row in result:
-            #employee = Employee(row[1], row[2], row[3], row[0])  #Cuidado con el orden
-            #employees.append(employee)
-            print()
-        return employees
+            print(row)
+            #location = Location(row[1], row[2])  #Cuidado con el orden
+            locations.append(row)
+        
+        return locations
 
     def update_data(self, employee):
         update_query = "UPDATE employees SET name=%s, age=%s, department=%s WHERE id=%s"

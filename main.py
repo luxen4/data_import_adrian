@@ -16,12 +16,6 @@ import json
 import os
 
 
-# Conexión a neo4j
-uriNeo4j = "bolt://localhost:7687"  
-userNeo4j = "neo4j"
-passwordNeo4j = "alberite"
-neo4j_crud = Neo4jCRUD(uriNeo4j, userNeo4j, passwordNeo4j)
-
 
 
 # Para docker Mysql
@@ -43,22 +37,31 @@ DB_DATABASE = "wineclub"
 DB_PORT = "3306"
 '''
 
-dabaseMongo="dataimport"
-portMongo="8889"
 
+# CONEXIONES a Docker
 
+# Conexión a puerto Mysql   
 DB_HOST = "localhost"
 DB_USER = "root"
 DB_PASSWORD = "my-secret-pw"
 DB_DATABASE = "dataimport"
-DB_PORT = "8888"
+DB_PORT = "8889"
+
+
+# Conexión a MongoDB        
+dabaseMongo="dataimport"
+portMongo="8888"
+
+# Conexión a neo4j          
+uriNeo4j = "bolt://localhost:7687"  
+userNeo4j = "neo4j"
+passwordNeo4j = "alberite"
+neo4j_crud = Neo4jCRUD(uriNeo4j, userNeo4j, passwordNeo4j)
 
 
 
 
-
-
-# Función que carga los registros en MongoDB
+# Función que carga los registros desde un CSV a MongoDB
 def insercionMongoDB():
     
     # Conexión a mongo
@@ -99,22 +102,21 @@ def insercionMongoDB():
             worksInTeam = NewWorks_in_Team(person_id= row[0], team_id=row[1], role=row[2])
             mongo_operations.create_team(worksInTeam) 
 
-# Función que carga los registros en Mysql
+# Función que carga los registros desde un CSV a Mysql
 def insercionMysql():
-    try:
-        obj = Database(DB_HOST,DB_USER,DB_PASSWORD,DB_DATABASE,DB_PORT)
-    except Exception as ex :
-        print(ex)
-        
+    
+    obj = Database(DB_HOST,DB_USER,DB_PASSWORD,DB_DATABASE,DB_PORT)
+   
     # Abre el archivo JSON y lee su contenido 
     # por cada uno que lea, que haga un insert
     with open('./resources/Data_Mysql/locations.json', 'r') as archivo_json:
         datos = json.load(archivo_json)
        
     for i in range(0, len(datos), 1):
-        city=datos[i]['city']
         name=datos[i]['name']
-        location = Location(city, name) 
+        city=datos[i]['city']
+        
+        location = Location(name, city) 
         obj.insert_data2(location)
     
     # Abre el archivo JSON y lee su contenido
@@ -142,7 +144,7 @@ def insercionMysql():
         person_skill = Person_Skill(person_id, skill_id, proficiency) 
         obj.insert_data4(person_skill)
         
-# Función que carga los registros en neo4j
+# Función que carga los registros desde un CSV a neo4j
 def insercionNeo4j():
     
     print(" Inserción de companies")
@@ -187,6 +189,7 @@ def insercionNeo4j():
             neo4j_crud.create_relationshipAdrian2("Persons","Companies","Works_at",node_properties) 
 
 
+# Función que carga los registros en Mysql
 def cargaDatos():
     print("Inserción en MySql")
     insercionMysql()
@@ -326,10 +329,20 @@ def main():
                         print( str(list['total_proyectos']) + " proyectos en " + list['nombre_equipo']  )
 
 
+
                     
                     
                 case 7:
                     print("")
+                    obj = Database(DB_HOST,DB_USER,DB_PASSWORD,DB_DATABASE,DB_PORT)
+                    locations = obj.get_all_data()
+                    print(locations)
+                    for i in range (0, len(locations)-1,1):
+                        location=locations[i]
+                        print("id " + str(location[0]))
+                        print("name " + location[1])
+                        print("city " + location[2])
+                        
                 case 8:
                     print("")
                 case 9:

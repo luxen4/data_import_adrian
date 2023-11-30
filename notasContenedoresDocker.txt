@@ -1,7 +1,7 @@
 '''
 Mysql
 docker pull mysql
-docker run --name mysq -p 8888:3306 -v mysqlVolume:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mysql  OK
+docker run --name mysq -p 8889:3306 -v mysqlVolume:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mysql  OK
 mysql -u root -p    para entrar desde exec y a la cmd
 Enter password:my-secret-pw
 create database dataimport;
@@ -17,7 +17,7 @@ meter las create tables a webbo
 
 Hacer un mongoVolume
 docker pull mongo
-docker run --name mongo -p 8889:27017 -v mongoVolume:/data/db -d mongo                                          OK  							
+docker run --name mongo -p 8888:27017 -v mongoVolume:/data/db -d mongo                                          OK  							
 docker exec -it mongo bash
 mongosh
 use dataimport
